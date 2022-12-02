@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('pandoraKey')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*', 'pandora-extravaganza.herokuapp.com/']
 CORS_ALLOW_ALL_ORIGINS = True
@@ -126,7 +126,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 django_heroku.settings(locals())
 
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'frontend/build/static')
