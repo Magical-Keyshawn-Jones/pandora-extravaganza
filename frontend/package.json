@@ -27,7 +27,7 @@
       "react-app/jest"
     ]
   },
-  "browserslist": {
+  "browserslist": { 
     "production": [
       ">0.2%",
       "not dead",
@@ -37,6 +37,10 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
-    ]
+    ],
+    "engines": {
+      "node": "v18.8.0",
+      "npm": "8.18.0"
+    }
   }
 }
