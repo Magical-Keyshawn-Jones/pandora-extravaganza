@@ -1,16 +1,22 @@
 import './App.css';
 import { connect } from 'react-redux';
-import Container from '@mui/material/Container';
 import { Routes, Route } from 'react-router-dom';
 // Component imports 
-import { WebsiteLogin,TestingRenders } from './components/componentExports';
+import { 
+  WebsiteLogin,
+  TestingRenders,
+  PageNotFound,
+  HomePage
+ } from './components/componentExports';
 
 function App() {
   return (
     <main id ='Website' component="main">
       <Routes>
         <Route path='/' element={<WebsiteLogin/>}/>
+        <Route path='/homePage' element={<HomePage/>}/>
         <Route path='/testingRenders' element={<TestingRenders/>}/>
+        <Route path='*' element={<PageNotFound/>}/>
       </Routes>
     </main>
   )

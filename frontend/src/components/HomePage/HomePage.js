@@ -1,11 +1,11 @@
-
+// import './HomePageCss.css';
 
 
 
 export default function HomePage() {
-    return (
-        <div>
-            <p>Welcome to my HomePage!</p>
+    return ( 
+        <div className='underline'>
+            <p className='underline'>Welcome to my HomePage!</p>
         </div>
     )
 }

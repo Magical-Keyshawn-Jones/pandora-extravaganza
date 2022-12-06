@@ -1,7 +1,55 @@
 .WebsiteLogin {
+    background: #0f0c29;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #24243e, #302b63, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.WebsiteLogin:hover {
     background: #800080;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to left, #ffc0cb, #800080);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to left, #ffc0cb, #800080); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     height: 100%;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.LoginBox {
+    margin-top: 5rem;
+    background-color: white;
+    height: 20rem;
+    width: 20rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2rem;
+    border: black solid 2px;
+}
+
+.LoginButtons {
+    margin: 1rem;
+    display: flex;
+    width: 11rem;
+    justify-content: space-between;
+}
+
+.WebsiteTitle {
+    /* color: #63E6FF; */
+    /* color: #00FBFF; */
+    /* color: #C8CAFF; */
+    font-size: 4rem;
+    letter-spacing: 1rem;
+}
+
+.WebsiteTitle.h1 {
+    text-align: center;
 }
