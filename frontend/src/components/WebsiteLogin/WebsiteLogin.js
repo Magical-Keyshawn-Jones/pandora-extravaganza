@@ -2,6 +2,7 @@ import './WebsiteLoginCss.css';
 import * as yup from 'yup';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 // Importing Function logic
 import {
     loginForm,
@@ -68,7 +69,7 @@ export default function WebsiteLogin() {
             return [value, setValue, handleChanges]
         }
     //
-    
+     
     // Button functions
     function registerButton() {
         navigate('/testingRender')
@@ -78,12 +79,13 @@ export default function WebsiteLogin() {
         navigate('/homePage')
     }
 
-    return (
-        <main className='WebsiteLogin'>
+    return ( 
+        <motion.main className='WebsiteLogin'>
             <header className='WebsiteTitle'>
-                <h1 className='WebsiteTitle underline'>Pandora Extravaganza!</h1>
+                <h1 className='WebsiteTitle'>Pandora Extravaganza!</h1>
             </header>
-            <form className='LoginBox'>
+            <motion.div initial={{x: 700, scale: .1, opacity: 0}} animate={{x: 0, opacity: 1, rotate: 360, rotateY: [0, 360], rotateX: [0,0,360], scale: [0,1]}} transition={{type: 'spring', duration: 2, bounce: .45}} className='LoginBox'>
+                <motion.div initial={{opacity: 0}} animate={{ opacity: 1}} transition={{}} >
                 <TextField 
                     name='email'
                     type='email' 
@@ -95,6 +97,7 @@ export default function WebsiteLogin() {
                     helperText={helperTextLogic(errorBoolean, errorValues)} 
                     label='Email Address'
                 />
+                </motion.div>
                 <TextField 
                     name='password' 
                     type='password' 
@@ -110,7 +113,7 @@ export default function WebsiteLogin() {
                     <Button onClick={()=>{loginButton()}} variant='contained'>Login</Button>
                     <Button onClick={()=>{registerButton()}} >Register</Button>
                 </div>
-            </form>
-        </main>
+            </motion.div>
+        </motion.main>
     )
 }
