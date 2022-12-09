@@ -35,6 +35,20 @@
     border: black solid 2px;
 }
 
+.RegisterChild:nth-child(1), 
+.RegisterChild:nth-child(2),
+.RegisterChild:nth-child(3),
+.RegisterChild:nth-child(4) {
+    margin-bottom: 1rem;
+}
+
+.RegisterInputs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .LoginButtons {
     margin: 1rem;
     display: flex;

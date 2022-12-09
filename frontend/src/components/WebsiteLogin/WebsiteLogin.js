@@ -10,7 +10,6 @@ import {
 } from './WebsiteLogic';
 // Material Ui imports
 import {
-    Box,
     Button,
     TextField,
   } from '../../Storage/MuiExports';
@@ -22,6 +21,10 @@ export default function WebsiteLogin() {
     const navigate = useNavigate()
     // Initial States
     const formInputs = {
+        username: '',
+        firstName: '',
+        lastName: '',
+        gender: '',
         email: '',
         password: '',
     }
@@ -34,6 +37,8 @@ export default function WebsiteLogin() {
     const [formValues, setFormValues, handleChanges] = useInput(formInputs)
     const [errorValues, setErrorValues] = useState(errorInputs)
     const [errorBoolean, setErrorBoolean] = useState(false)
+    // Tracker for Login container
+    const [isOpen, setIsOpen] = useState(false)
 
     // Form/Input Logic
         // Validator Function
@@ -69,23 +74,50 @@ export default function WebsiteLogin() {
             return [value, setValue, handleChanges]
         }
     //
+
      
     // Button functions
+    // If "isOpen" is false, then set it to true, else submit the information in the form
     function registerButton() {
-        navigate('/testingRender')
+        switch(isOpen) {
+            case true:
+                navigate('testingRenders')
+                break;
+            default:
+                setIsOpen(!isOpen)
+                setErrorBoolean(false)
+        }
     }
 
     function loginButton() {
-        navigate('/homePage')
+        if (isOpen === true) {
+            setIsOpen(!isOpen)
+        } else if (formValues.email.length === 0 || formValues.password.length === 0) {
+            setErrorBoolean(true)
+        } else {
+            navigate('/homePage')
+        }
     }
 
+    console.log(formValues.email.length)
     return ( 
-        <motion.main className='WebsiteLogin'>
-            <header className='WebsiteTitle'>
-                <h1 className='WebsiteTitle'>Pandora Extravaganza!</h1>
+        <motion.main className='WebsiteLogin'> 
+            <header className='WebsiteTitle'> {/*Give each letter a span with a dynamic className to animate the Title*/}
+                <motion.h1 initial={{scale: .1}} animate={{scale: 1, skew:360, rotateY: 360}} transition={{duration: 2}} className='WebsiteTitle'>Pandora Extravaganza!</motion.h1>
             </header>
-            <motion.div initial={{x: 700, scale: .1, opacity: 0}} animate={{x: 0, opacity: 1, rotate: 360, rotateY: [0, 360], rotateX: [0,0,360], scale: [0,1]}} transition={{type: 'spring', duration: 2, bounce: .45}} className='LoginBox'>
-                <motion.div initial={{opacity: 0}} animate={{ opacity: 1}} transition={{}} >
+            <motion.div layout 
+            style={{ height: isOpen ? '40rem' : '20rem'}} 
+            initial={{x: 700, scale: .1, opacity: 0}} 
+            animate={{x: 0, opacity: 1, rotate: 360, rotateY: [0, 360], rotateX: [0,0,360], scale: [0,1]}} 
+            transition={{type: 'spring', duration: 1.5, bounce: .45}} 
+            className='LoginBox'>
+                {isOpen === true ?
+                <motion.div className='RegisterInputs'>
+                    <TextField className='RegisterChild' name='username' type='text' value={formValues.username} onChange={handleChanges} label='Username'/>
+                    <TextField className='RegisterChild' name='firstName' type='text' value={formValues.firstName} onChange={handleChanges}  label='First Name'/>
+                    <TextField className='RegisterChild' name='lastName' type='text' value={formValues.lastName} onChange={handleChanges}  label='Last Name'/>
+                    <TextField className='RegisterChild' name='gender' type='text' value={formValues.gender} onChange={handleChanges}  label='Gender'/>
+                </motion.div> : null}
                 <TextField 
                     name='email'
                     type='email' 
@@ -97,7 +129,6 @@ export default function WebsiteLogin() {
                     helperText={helperTextLogic(errorBoolean, errorValues)} 
                     label='Email Address'
                 />
-                </motion.div>
                 <TextField 
                     name='password' 
                     type='password' 
@@ -111,7 +142,7 @@ export default function WebsiteLogin() {
                 />
                 <div className='LoginButtons'>
                     <Button onClick={()=>{loginButton()}} variant='contained'>Login</Button>
-                    <Button onClick={()=>{registerButton()}} >Register</Button>
+                    <Button onClick={()=>{registerButton()}}>Register</Button>
                 </div>
             </motion.div>
         </motion.main>

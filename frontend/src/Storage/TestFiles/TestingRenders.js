@@ -1,12 +1,15 @@
 import axios from 'axios';
 import './TestingRendersCss.css';
 import { useState } from 'react';
+import { InputGroup } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   Box,
   Button,
   TextField,
   Container,
   Slider,
+  FormControl,
 } from '../MuiExports';
 
 export default function TestingRenders(props) {
@@ -62,6 +65,11 @@ export default function TestingRenders(props) {
           <TextField label="I don't know"/>
         </Box>
       </Container>
+        <InputGroup className="mb-3">
+          <FormControl placeholder="Search" />
+          <input type='text'  placeholder='Username'/>
+          <Button variant="outline-secondary">🔍</Button>
+        </InputGroup>
     </main>
   );
 }
