@@ -15,7 +15,7 @@ import {
 export default function TestingRenders(props) {
   const {
     test
-  } = props
+  } = props 
   
   const [something, setSomething] = useState(0)
 

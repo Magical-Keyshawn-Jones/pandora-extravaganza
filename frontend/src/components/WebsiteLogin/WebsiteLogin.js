@@ -1,7 +1,8 @@
 import './WebsiteLoginCss.css';
+import ProfilePic from '../../Storage/Images/Portfolio/Profile_Pic.jpg';
 import * as yup from 'yup';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 // Importing Function logic
 import {
@@ -79,19 +80,22 @@ export default function WebsiteLogin() {
     // Button functions
     // If "isOpen" is false, then set it to true, else submit the information in the form
     function registerButton() {
-        switch(isOpen) {
-            case true:
-                navigate('testingRenders')
-                break;
-            default:
-                setIsOpen(!isOpen)
-                setErrorBoolean(false)
+        if (isOpen === true){
+            if (formValues.email.length < 1 || formValues.password < 1) {
+                setErrorBoolean(true)
+            } else {
+                navigate('/testingRenders')
+            }
+        } else {
+            setIsOpen(!isOpen)
+            setErrorBoolean(false)
         }
     }
 
     function loginButton() {
         if (isOpen === true) {
             setIsOpen(!isOpen)
+            setErrorBoolean(false)
         } else if (formValues.email.length === 0 || formValues.password.length === 0) {
             setErrorBoolean(true)
         } else {
@@ -145,6 +149,14 @@ export default function WebsiteLogin() {
                     <Button onClick={()=>{registerButton()}}>Register</Button>
                 </div>
             </motion.div>
+            <div className="card position-absolute align-self-start" style={{width: "18rem", top: "49vh"}}>
+                <img src={ProfilePic} className="card-img-top" alt="Profile_Picture"/>
+                <div className="card-body">
+                    <h5 className="card-title">Keyshawn Jones Portfolio</h5>
+                    <p className="card-text">Just wanna see my portfolio. I gotch you fam</p>
+                    <Link to='/portfolio' className='btn btn-primary' >Portfolio</Link>
+                </div>
+            </div>
         </motion.main>
     )
 }

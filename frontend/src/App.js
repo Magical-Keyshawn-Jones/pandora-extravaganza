@@ -4,10 +4,11 @@ import { connect } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 // Component imports 
 import { 
-  WebsiteLogin,
-  TestingRenders,
+  HomePage,
   PageNotFound,
-  HomePage
+  Portfolio,
+  TestingRenders,
+  WebsiteLogin,
  } from './components/componentExports';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
       <Routes>
         <Route path='/' element={<WebsiteLogin/>}/>
         <Route path='/homePage' element={<HomePage/>}/>
+        <Route path='/portfolio' element={<Portfolio/>}/>
         <Route path='/testingRenders' element={<TestingRenders/>}/>
         <Route path='*' element={<PageNotFound/>}/>
       </Routes>
