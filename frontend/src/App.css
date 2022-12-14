@@ -14,11 +14,9 @@
     align-items: center;
     justify-content: space-between;
     padding-right: 5%;
-    color: white;
-    background: black;
-    /* background: #FBF4D7; */
-    /* background: #560034; */
-    /* background: #0084A9; */
+    background: #0f0c29;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #24243e, #302b63, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     width: 100%;
     position: fixed;
     z-index: 1;
@@ -26,6 +24,14 @@
 }
 
 .NavBar span {
-    color: #69EEFF;
-    font-size: 1.5rem;
+    color: #ff00ea;
+    font-size: 2rem;
+}
+
+.NavBar span:hover {
+    background: rgb(0, 247, 255);
+    color: rgb(0, 0, 0);
+    border-radius: 3rem;
+    padding: 0 .5rem;
+    cursor: pointer;
 }

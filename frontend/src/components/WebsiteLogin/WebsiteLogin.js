@@ -1,10 +1,12 @@
 import './WebsiteLoginCss.css';
+import '@fontsource/emilys-candy/400.css';
 import * as React from 'react'
 import ProfilePic from '../../Storage/Images/Portfolio/Profile_Pic.jpg';
 import * as yup from 'yup';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { ThemeProvider, createTheme } from '@mui/material';
 // Importing Function logic
 import {
     loginForm,
@@ -14,22 +16,19 @@ import {
 import {
     Button,
     TextField,
-    Box,
-    List,
-    ListItem,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText,
-    InboxIcon,
-    MailIcon,
-    Divider,
-    Drawer,
+    Typography,
   } from '../../Storage/MuiExports';
 
 //   Make Login Page loud or you're not done and it is not professional
 // in the bottom right corner offer to show my Portfolio first for employers
 
-export default function WebsiteLogin() {
+export default function WebsiteLogin(props) {
+    const { loginStatus } = props
+    const theme = createTheme({
+        typography: {
+            fontFamily: ['emilys-candy'].join(',')
+        }
+    })
 
     const navigate = useNavigate()
     // Initial States
@@ -111,6 +110,7 @@ export default function WebsiteLogin() {
         } else if (formValues.email.length === 0 || formValues.password.length === 0) {
             setErrorBoolean(true)
         } else {
+            loginStatus()
             navigate('/homePage')
         }
     }
@@ -118,7 +118,11 @@ export default function WebsiteLogin() {
     return ( 
         <motion.main className='WebsiteLogin'> 
             <header className='WebsiteTitle'> {/*Give each letter a span with a dynamic className to animate the Title*/}
-                <motion.h1 initial={{scale: .1}} animate={{scale: 1, skew:360, rotateY: 360}} transition={{duration: 2}} className='WebsiteTitle'>Pandora Extravaganza!</motion.h1>
+                <motion.h1 initial={{scale: .1}} animate={{scale: 1, skew:360, rotateY: 360}} transition={{duration: 2}} className='WebsiteTitle'>
+                    <ThemeProvider theme={theme}>
+                    <Typography sx={{ fontSize: '4rem'}}>Pandora Extravaganza!</Typography>
+                    </ThemeProvider>
+                    </motion.h1>
             </header>
             <motion.div layout 
             style={{ height: isOpen ? '40rem' : '20rem'}} 

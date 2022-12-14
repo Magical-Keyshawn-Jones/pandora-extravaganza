@@ -6,7 +6,9 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@fontsource/emilys-candy": "^4.5.10",
     "@fontsource/roboto": "^4.5.8",
+    "@fontsource/tangerine": "^4.5.9",
     "@headlessui/react": "^1.7.5",
     "@heroicons/react": "^2.0.13",
     "@mui/icons-material": "^5.10.16",
