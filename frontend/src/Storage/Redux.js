@@ -1,26 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// Storage Placeholder
-// This file is not actively used in production
-
-const storagePlaceholder = createSlice({
-    name: 'Testing Redux',
-    initialState: 'This does nothing useful',
+// const navTabs = ['HomePage', 'Login', 'Example']
+const tabStorage = createSlice({
+    name: 'Tabs',
+    initialState: 'Login',
 
     reducers: {
-        changeState(state, action) {
-            state = action.payload
-            return state
-        },
-
-        resetState(state, action) {
-            state = 'This does nothing useful'
-            return state
+        selectTab(state, action) {
+            return state = action.payload
         }
     }
 })
 
-export const { changeState, resetState} = storagePlaceholder.actions
+export const { selectTab } = tabStorage.actions
 export {
-    storagePlaceholder,
+    tabStorage,
 }

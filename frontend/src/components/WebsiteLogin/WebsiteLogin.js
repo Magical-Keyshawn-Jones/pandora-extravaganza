@@ -1,4 +1,5 @@
 import './WebsiteLoginCss.css';
+import * as React from 'react'
 import ProfilePic from '../../Storage/Images/Portfolio/Profile_Pic.jpg';
 import * as yup from 'yup';
 import { useState } from 'react';
@@ -13,12 +14,23 @@ import {
 import {
     Button,
     TextField,
+    Box,
+    List,
+    ListItem,
+    ListItemButton,
+    ListItemIcon,
+    ListItemText,
+    InboxIcon,
+    MailIcon,
+    Divider,
+    Drawer,
   } from '../../Storage/MuiExports';
 
 //   Make Login Page loud or you're not done and it is not professional
 // in the bottom right corner offer to show my Portfolio first for employers
 
 export default function WebsiteLogin() {
+
     const navigate = useNavigate()
     // Initial States
     const formInputs = {
@@ -54,7 +66,7 @@ export default function WebsiteLogin() {
         function change(name, value) {
             setFormValues({...formValues, [name]: value})
 
-            validator(name, value)
+            validator(name, value) 
         }
         
         // Custom Hook for onChange
@@ -103,7 +115,6 @@ export default function WebsiteLogin() {
         }
     }
 
-    console.log(formValues.email.length)
     return ( 
         <motion.main className='WebsiteLogin'> 
             <header className='WebsiteTitle'> {/*Give each letter a span with a dynamic className to animate the Title*/}
@@ -149,7 +160,7 @@ export default function WebsiteLogin() {
                     <Button onClick={()=>{registerButton()}}>Register</Button>
                 </div>
             </motion.div>
-            <div className="card position-absolute align-self-start" style={{width: "18rem", top: "49vh"}}>
+            <div className="card position-absolute align-self-start" style={{ width: "18rem", top: "49vh"}}>
                 <img src={ProfilePic} className="card-img-top" alt="Profile_Picture"/>
                 <div className="card-body">
                     <h5 className="card-title">Keyshawn Jones Portfolio</h5>
