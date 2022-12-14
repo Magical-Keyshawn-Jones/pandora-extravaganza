@@ -22,6 +22,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
+import IconButton from '@mui/material/IconButton';
 import MailIcon from '@mui/icons-material/Mail';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import Popover from '@mui/material/Popover';
@@ -33,7 +34,7 @@ import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 
 export {
-    AccountCircleRoundedIcon, Avatar, Box, Button, Container, Drawer, Divider, FormControl, FormHelperText,
+    AccountCircleRoundedIcon, Avatar, Box, Button, Container, Drawer, Divider, FormControl, FormHelperText, IconButton,
     InboxIcon, Input, InputLabel, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Logout, Menu, MailIcon,
     MenuItem, MenuRoundedIcon, Popover, Slider, Tab, Tabs, TextField, Tooltip, Typography, Settings
 } 
