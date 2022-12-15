@@ -125,7 +125,7 @@ export default function WebsiteLogin(props) {
                     </motion.h1>
             </header>
             <motion.div layout 
-            style={{ height: isOpen ? '40rem' : '20rem'}} 
+            style={{ height: isOpen ? '40rem' : '20rem', marginTop: isOpen ? '1rem' : '5rem'}} 
             initial={{x: 700, scale: .1, opacity: 0}} 
             animate={{x: 0, opacity: 1, rotate: 360, rotateY: [0, 360], rotateX: [0,0,360], scale: [0,1]}} 
             transition={{type: 'spring', duration: 1.5, bounce: .45}} 

@@ -1,6 +1,6 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '@fontsource/emilys-candy'
+import '@fontsource/emilys-candy/400.css'
 import { useState } from 'react';
 import { connect } from 'react-redux';
 import { Routes, Route, useNavigate } from 'react-router-dom';
@@ -33,8 +33,8 @@ function App(props) {
   })
   const navigate = useNavigate()
   // Sidebar main tabs
-  // const bestTabs = ['Portfolio', 'HomePage', 'Bible City', 'Shopaganza', 'Pandorian'] 
-  const mainTabs = ['Login', 'HomePage', 'Bible City','Live WebSites', 'Console Games', 'Games', 'Gaming Forum',
+  const bestTabs = ['Portfolio', 'HomePage', 'Bible City', 'Shopaganza', 'Pandorian'] 
+  const mainTabs = ['Bible City','Live WebSites', 'Console Games', 'Games', 'Gaming Forum',
   'Shopping Tab', 'News Channel', 'Social Media Page', 'Math Solver', 'Closest Fast Food',
   'Optimum(Best of Anything)', 'Are We Friend/s', 'Text to Story', 'Story Designer', 'Website Review',
   'Creative Typing', 'Ew my Voice']
@@ -56,12 +56,18 @@ function App(props) {
     setLoggedIn(!loggedIn)
   }
 
-  // Custom Theme
+  // Custom Themes
   const theme = createTheme({
     palette: {
       primary: {
         main: '#f8bbd0',
       }
+    }
+  })
+
+  const sideBarFont = createTheme({
+    typography: {
+      fontFamily: ['emilys-candy'].join(',')
     }
   })
 
@@ -88,7 +94,7 @@ function App(props) {
 
     function listMainTabs(tab) {
         return (
-            <Box key={tab} sx={{ width: 250}} onClick={()=>{toggleDrawer()}} >
+            <Box key={tab} sx={{color: 'white', borderBottom: 'black solid 1px', width: 250, ":hover": {background: 'linear-gradient(to right, #000000, #434343)', color: '#69EEFF'}}} onClick={()=>{toggleDrawer()}} >
               <List disablePadding >
                     <ListItemButton>
                         <ListItemText primary={tab}/>
@@ -145,12 +151,16 @@ function App(props) {
         )
     }
   }
-
+  // linear-gradient(to right, #ef32d9, #89fffd)
   return (
     <main id ='Website' component="main">
       <ThemeProvider theme={theme}>
-      <Box className='NavBar'>
-        <Drawer open={sideBar} onClose={()=>{toggleDrawer()}}>
+        {/* Box-Shadow: H-offset, V-offset, blurRadius, SpreadRadius(optional), Color */}
+      <Box sx={{boxShadow: '0 0 .5rem 4px black'}} className='NavBar'>
+        <Drawer open={sideBar} PaperProps={{sx: {background: 'linear-gradient(to right, #24243e, #302b63, #0f0c29)'}}} onClose={()=>{toggleDrawer()}}>
+          <ThemeProvider theme={sideBarFont}><Typography sx={{ background: 'linear-gradient(to right, #ef32d9, #89fffd)', textAlign: 'center', height: '3rem', fontSize: '2rem'}}>
+            Wassup, Kiwi! 
+          </Typography></ThemeProvider>
           {mainTabs.map((item, index)=>{return listMainTabs(item)})}
         </Drawer>
         <Tabs value={currentTab} >
@@ -158,7 +168,6 @@ function App(props) {
         </Tabs>
         {loggedIn === false ? <ThemeProvider theme={navFont}><Typography sx={{ color: 'white', fontSize: '1.5rem'}}>Sign or Register to enjoy your stay</Typography></ThemeProvider> : null}
         {/* Have Doorknob link to doorknob section of the website. It will be literally about me. */}
-        {/* <span onClick={()=>{navigate('/doorknob')}}>Doorknob</span> */}
         <Tooltip title='Account settings'>
           <IconButton onClick={(event)=>{hookProfileAnchor(event)}} >
             <AccountCircleRoundedIcon sx={{width: '3rem', height: '3rem', color: 'white',}}/>
