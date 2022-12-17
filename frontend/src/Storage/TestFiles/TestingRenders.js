@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../API/Api';
 import './TestingRendersCss.css';
 import { useState } from 'react';
 import { InputGroup } from 'react-bootstrap';
@@ -19,7 +19,7 @@ export default function TestingRenders(props) {
   
   const [something, setSomething] = useState(0)
 
-  axios.get('http://127.0.0.1:8000/test/3')
+  axios.get('3')
   // axios.get('https://pandora-extravaganza.herokuapp.com/test/3')
   .then(res => {
     setSomething(res.data.message)

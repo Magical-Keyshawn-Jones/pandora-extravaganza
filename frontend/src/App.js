@@ -70,7 +70,6 @@ function App(props) {
       fontFamily: ['emilys-candy'].join(',')
     }
   })
-
   // Keeps track of current tab
   function tabTracker(){
     const url = window.location.href;
@@ -132,12 +131,12 @@ function App(props) {
       case 'login':
         if (loggedIn === true) {return} else {
           return (
-            <Tab key={capName} value={capName} label={capName} sx={{color: 'white'}} onClick={(event)=>{selectedTab(name, capName, event)}}/>
+            <Tab key={capName + '.'} value={capName} label={capName} sx={{color: 'white'}} onClick={(event)=>{selectedTab(name, capName, event)}}/>
           )
         }
       case 'menuIcon':
         return (
-          <Tooltip title='Menu'>
+          <Tooltip key={capName} title='Menu'>
             <Tab key={capName} value={capName} sx={{color: 'white'}} icon={<MenuRoundedIcon/>} onClick={(event)=>{selectedTab(name, capName, event, true)}}/>
           </Tooltip>
         )
@@ -157,26 +156,31 @@ function App(props) {
       <ThemeProvider theme={theme}>
         {/* Box-Shadow: H-offset, V-offset, blurRadius, SpreadRadius(optional), Color */}
       <Box sx={{boxShadow: '0 0 .5rem 4px black'}} className='NavBar'>
+
         <Drawer open={sideBar} PaperProps={{sx: {background: 'linear-gradient(to right, #24243e, #302b63, #0f0c29)'}}} onClose={()=>{toggleDrawer()}}>
           <ThemeProvider theme={sideBarFont}><Typography sx={{ background: 'linear-gradient(to right, #ef32d9, #89fffd)', textAlign: 'center', height: '3rem', fontSize: '2rem'}}>
-            Wassup, Kiwi! 
+            Wassup, Kiwi!  
           </Typography></ThemeProvider>
           {mainTabs.map((item, index)=>{return listMainTabs(item)})}
         </Drawer>
-        <Tabs value={currentTab} >
+
+        <Tabs key='navBar' value={currentTab} >
           {tabList.map(item=>{return tabFactory(item)})}
         </Tabs>
+
         {loggedIn === false ? <ThemeProvider theme={navFont}><Typography sx={{ color: 'white', fontSize: '1.5rem'}}>Sign or Register to enjoy your stay</Typography></ThemeProvider> : null}
-        {/* Have Doorknob link to doorknob section of the website. It will be literally about me. */}
+
         <Tooltip title='Account settings'>
           <IconButton onClick={(event)=>{hookProfileAnchor(event)}} >
             <AccountCircleRoundedIcon sx={{width: '3rem', height: '3rem', color: 'white',}}/>
           </IconButton>
         </Tooltip>
+
       </Box>
       </ThemeProvider>
+
       <Menu 
-      anchorEl={profileAnchor} 
+      anchorEl={profileAnchor}  
       id='account-menu' 
       open={open}
       onClose={()=>{setProfileAnchor(null)}}
@@ -203,6 +207,7 @@ function App(props) {
           Logout
         </MenuItem>
       </Menu>
+
       <Routes>
         <Route path='/' element={<WebsiteLogin loginStatus={loginStatus} />}/>
         <Route path='/home' element={<HomePage/>}/>
