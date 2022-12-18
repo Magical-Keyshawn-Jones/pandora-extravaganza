@@ -44,8 +44,6 @@ INSTALLED_APPS = [
     'pandoraApp.apps.PandoraappConfig',
     'corsheaders',
     'rest_framework',
-    'rest_framework.authtoken',
-    'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
@@ -61,18 +59,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'pandoraBackend.urls'
-
-REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-    ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated'
-    )
-}
 
 TEMPLATES = [
     {

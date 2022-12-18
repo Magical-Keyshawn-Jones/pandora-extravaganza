@@ -11,6 +11,11 @@ urlpatterns = [
     path('test/2', views.test2, name='test2'),
     path('test/3', views.test3, name='test3'),
 
-    #Endpoints
+    #User Endpoints
     path('users', userViews.getAll, name='getAll'),
+    path('users/<int:id>', userViews.getById, name='getById'),
+    path('users/delete', userViews.deleteUser, name='deleteUser'),
+    path('users/register', userViews.registerUser, name='registerUser'),
+    path('users/login', userViews.loginUser, name='loginUser'),
+    path('users/verifyToken', userViews.verifyToken, name='verifyToken'),
 ]

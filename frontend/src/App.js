@@ -23,6 +23,7 @@ import {
 
 /* Notes
   @Tabs value might pose a problem if the page refreshes. If thats the case have the value = page url
+  #On open mount have the navbar transition in from the top
 */
 
 function App(props) {
