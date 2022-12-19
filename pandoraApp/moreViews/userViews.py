@@ -8,9 +8,11 @@ import os
 import jwt
 import bcrypt
 # Imports line notes: 84,
-# Refresh token is created on register. Then access token is created/refreshed upon login. Refresh last: 90days, Access last: 60days. 
+# Refresh token is created on register. Then access token is created/refreshed upon login. Refresh last: 90days, Access last: 60days.
+# access token is key = Refresh token 
 # When Access tokens expire create a new one upon login
-# Decode Token then change the payload exp date to refresh the token
+# Decode Token if username matches  
+# then change the payload exp date to refresh the token
 # Then encode it again, then send it back to them
 
 # Global Variables
