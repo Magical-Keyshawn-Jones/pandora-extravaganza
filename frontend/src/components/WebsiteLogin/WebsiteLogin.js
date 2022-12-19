@@ -95,7 +95,7 @@ export default function WebsiteLogin(props) {
             if (formValues.email.length < 1 || formValues.password < 1) {
                 setErrorBoolean(true)
             } else {
-                navigate('/testingRenders')
+                navigate('/home')
             }
         } else {
             setIsOpen(!isOpen)
@@ -111,7 +111,7 @@ export default function WebsiteLogin(props) {
             setErrorBoolean(true)
         } else {
             loginStatus()
-            navigate('/homePage')
+            navigate('/home')
         }
     }
 

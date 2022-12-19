@@ -15,7 +15,8 @@ urlpatterns = [
     path('users', userViews.getAll, name='getAll'),
     path('users/<int:id>', userViews.getById, name='getById'),
     path('users/delete', userViews.deleteUser, name='deleteUser'),
+    path('users/deleteAll', userViews.deleteAll, name='deleteAll'),
     path('users/register', userViews.registerUser, name='registerUser'),
     path('users/login', userViews.loginUser, name='loginUser'),
-    path('users/verifyToken', userViews.verifyToken, name='verifyToken'),
+    path('users/accessToken', userViews.accessToken, name='accessToken'),
 ]
