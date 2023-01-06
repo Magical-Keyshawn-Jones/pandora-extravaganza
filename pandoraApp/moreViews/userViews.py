@@ -13,7 +13,7 @@ import bcrypt
 # When Access tokens expire create a new one upon login
 # Decode Token if username matches  
 # then change the payload exp date to refresh the token
-# Then encode it again, then send it back to them
+# Then encode it again, then send it back to them. Have frontend store it in redux or state
 
 # Global Variables
 current_datetime = datetime.today()
@@ -33,7 +33,7 @@ def accessToken(request):
         print(current_datetime)
         return Response({'message': f"Unable to decode the token, error: {error}"})
 
-# Retrieves all Users
+# Retrieves all users
 @api_view(['GET'])
 def getAll(request):
     users = Users.objects.all()
@@ -42,6 +42,7 @@ def getAll(request):
     normalizer = UserSerializer(users, many=True)
     return Response(normalizer.data, status = status.HTTP_200_OK)
 
+# Retrieve user by Id
 @api_view(['GET'])
 def getById(request, id):
     requestedUser = ''
@@ -54,6 +55,7 @@ def getById(request, id):
         return Response({'message': 'user with that id does not exist'}, status = status.HTTP_404_NOT_FOUND) 
     return Response(requestedUser, status = status.HTTP_200_OK)
 
+# Delete all users
 @api_view(['DELETE'])
 def deleteAll(request):
     try:
@@ -65,6 +67,7 @@ def deleteAll(request):
     users.delete()
     return Response({'message': 'Successfully deleted all users'}, status = status.HTTP_200_OK)
 
+# Delete specific user
 @api_view(['DELETE'])
 def deleteUser(request):
     try:
@@ -97,9 +100,26 @@ def registerUser(request):
         hashPassword = bcrypt.hashpw(password.encode('UTF-8'), salt)
         stringHash = hashPassword.decode()
 
+
+        payload_data = {
+            'username': username,
+            'password': stringHash,
+            'exp': refreshTokenExp,
+        }
+
+        # token Key
+        refreshToken = jwt.encode(
+            payload = payload_data,
+            key = os.environ.get('PandoraTokenKey'),
+        )
+
         user = {
             'username': username,
             'password': stringHash,
+            'date_created': current_datetime,
+            'admin': False,
+            'first_login': True,
+            'token': refreshToken,
         }
 
         serializer = UserSerializer(data = user)
@@ -146,26 +166,30 @@ def loginUser(request):
         return Response({
             'message': 'Username or Password is Incorrect'
         }, status.HTTP_400_BAD_REQUEST)
+    elif normalizer.data['first_login'] == True:
+        if normalizer.data['accessToken'] is None:
+            accessToken = jwt.encode(
+                payload = {'exp': accessTokenExp},
+                key = os.environ.get('PandoraTokenKey'),
+            )
 
-    payload_data = {
-        'username': username,
-        'password': password,
-        'exp': current_datetime,
-    }
+            updating = {
+                'accessToken': accessToken,
+                'first_login': False,
+            }
+            updateUser = UserSerializer(instance = user, data = updating, partial = True)
+            if updateUser.is_valid():
+                updateUser.save()
+                return Response({
+                    'message': 'Welcome to Pandora Extravaganza',
+                    'accessToken': accessToken,
+                })
+            else:
+                return Response({'message': 'failed'})
 
-    # token Key 
-    token = jwt.encode(
-        payload = payload_data,
-        key = os.environ.get('PandoraTokenKey'),
-    )
-    payload_data['password'] = hashPassword
-    payload_data['token'] = token
+    
 
-    normalizer = UserSerializer(instance = user, data = payload_data)
-
-    if normalizer.is_valid():
-        normalizer.save()
     return Response({
         'message': 'Welcome to Pandora Extravaganza',
-        'token': token,
+        # 'token': normalizer.data['username'],
     }, status = status.HTTP_202_ACCEPTED)
