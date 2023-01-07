@@ -10,4 +10,4 @@ So far the user starts off with a simple login page. What does my login do?
 
 -The form is sent to my API where it hashes the password and stores all the user info in my SQLite3 database. 
 
--My API returns a token to keep the user loggedin until they choose to logout. which will then kick them out of everything
+-My API returns a token to keep the user logged-in until they choose to logout. which will then kick them out of everything
