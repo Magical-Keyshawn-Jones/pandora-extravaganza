@@ -23,6 +23,13 @@ accessTokenExp = current_datetime + timedelta(days=60)
 yup = {'message': 'it works!!!'}
 nope = {'message': 'it Sucks!'}
 
+# Encrypts a password and returns the stringHash
+def encryptPassword(password):
+    # High salt = stronger hashes
+    salt = bcrypt.gensalt(12)
+    hashPassword = bcrypt.hashpw(password.encode('UTF-8'), salt)
+    return hashPassword.decode()
+
 # Checks for correct user login
 def userChecker(request):
     try:
@@ -123,11 +130,18 @@ def deleteUser(request):
 @api_view(['PUT'])
 def changeUserInfo(request):
     userData = userChecker(request)
-    
+    specialChanges = ''
+
     if isinstance(userData, Response):
         return userData
     
-    userChanges = UserSerializer(instance = userData['user'], data = request.data, partial = True)
+    if 'password' in request.data['newChanges']:
+        specialChanges = request.data['newChanges']
+        specialChanges['password'] = encryptPassword(request.data['newChanges']['password'])
+    else:
+        specialChanges = request.data['newChanges']
+
+    userChanges = UserSerializer(instance = userData['user'], data = specialChanges, partial = True)
 
     # In the future list where the changes was made in the message. Likely using a loop
     if userChanges.is_valid():
@@ -145,8 +159,6 @@ def registerUser(request):
 
     username = request.data['username']
     password = request.data['password']
-    # High salt = stronger hashes
-    salt = bcrypt.gensalt(8)
 
     # Checks if a username is already taken
     try:
@@ -157,8 +169,7 @@ def registerUser(request):
         }, status = status.HTTP_400_BAD_REQUEST)
     # If not Hashes and stores the password and Creates a refresh token along with the user 
     except:
-        hashPassword = bcrypt.hashpw(password.encode('UTF-8'), salt)
-        stringHash = hashPassword.decode()
+        stringHash = encryptPassword(password)
 
 
         payload_data = {
@@ -190,7 +201,6 @@ def registerUser(request):
         }, status = status.HTTP_201_CREATED)
 
 # User Logging In 
-# access token == expired - create a new access token
 @api_view(['POST'])
 def loginUser(request):
     userData = userChecker(request)
