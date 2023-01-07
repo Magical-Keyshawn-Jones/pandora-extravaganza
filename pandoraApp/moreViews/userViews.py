@@ -19,6 +19,43 @@ import bcrypt
 current_datetime = datetime.today()
 refreshTokenExp = current_datetime + timedelta(days= 90)
 accessTokenExp = current_datetime + timedelta(days=60)
+# Used to testing responses
+yup = {'message': 'it works!!!'}
+nope = {'message': 'it Sucks!'}
+
+# Checks for correct user login
+def userChecker(request):
+    try:
+        username = request.data['username']
+    except:
+        return Response({'message': 'username is required'}, status = status.HTTP_400_BAD_REQUEST)
+    
+    try:
+        password = request.data['password']
+    except:
+        return Response({'message': 'password is required'}, status = status.HTTP_400_BAD_REQUEST)
+    
+    try:
+        user = Users.objects.get(username = username)
+    except:
+        return Response({
+            'message': 'Username or Password is Incorrect'
+        }, status = status.HTTP_404_NOT_FOUND)
+
+
+    normalizer = UserSerializer(user, many = False)
+    hashPassword = normalizer.data['password']
+
+    results = bcrypt.checkpw(password.encode('UTF-8'), hashPassword.encode())
+    
+    if results == False:
+        return Response({'message': 'Username or Password is Incorrect'})
+    else:
+        return {
+            'results': results,
+            'user': user,
+            'normalizer': normalizer,
+        }
 
 @api_view(['POST'])
 def accessToken(request):
@@ -53,7 +90,7 @@ def getById(request, id):
             requestedUser = x
     if requestedUser == '':
         return Response({'message': 'user with that id does not exist'}, status = status.HTTP_404_NOT_FOUND) 
-    return Response(requestedUser, status = status.HTTP_200_OK)
+    return Response({'id': requestedUser['id'], 'username': requestedUser['username'], 'admin': requestedUser['admin']}, status = status.HTTP_200_OK)
 
 # Delete all users
 @api_view(['DELETE'])
@@ -81,6 +118,26 @@ def deleteUser(request):
     
     user.delete()
     return Response({'message': f"{request.data['username']} successfully deleted"})
+
+# Makes changes to the user
+@api_view(['PUT'])
+def changeUserInfo(request):
+    userData = userChecker(request)
+    
+    if isinstance(userData, Response):
+        return userData
+    
+    userChanges = UserSerializer(instance = userData['user'], data = request.data, partial = True)
+
+    # In the future list where the changes was made in the message. Likely using a loop
+    if userChanges.is_valid():
+        userChanges.save()
+        return Response({'message': 'Successfully made the changes to the user'}, status = status.HTTP_200_OK)
+    else:
+        return Response({'message': 'Error implementing changes. Changes were not made.'}, status = status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+    
+
 
 # Creates a new user
 @api_view(['POST'])
@@ -136,63 +193,26 @@ def registerUser(request):
 # access token == expired - create a new access token
 @api_view(['POST'])
 def loginUser(request):
-    try:
-        username = request.data['username']
-    except:
-        return Response({'message': 'username is required'}, status = status.HTTP_400_BAD_REQUEST)
-    
-    try:
-        password = request.data['password']
-    except:
-        return Response({'message': 'password is required'}, status = status.HTTP_400_BAD_REQUEST)
-    
-    try:
-        user = Users.objects.get(username = username)
-    except:
-        return Response({
-            'message': 'Username or Password is Incorrect'
-        }, status = status.HTTP_404_NOT_FOUND)
+    userData = userChecker(request)
 
+    if  isinstance(userData, Response):
+        return userData
 
-    normalizer = UserSerializer(user, many = False)
-    hashPassword = normalizer.data['password']
-
-    # Checks if access token is expired
-    def expiredAccess():
-        accessToken = normalizer.data['accessToken']
-        tokenKey = os.environ.get('PandoraTokenKey')
-        jwtHeader = jwt.get_unverified_header(accessToken)
-        try: 
-            verify = jwt.decode(accessToken, key=tokenKey, algorithms= [jwtHeader['alg']])
-            return False
-        except ExpiredSignatureError as error:
-            return True
-
-    # Checks if Refresh token is expired
-    def expiredRefresh():
-        refreshToken = normalizer.data['token']
-        tokenKey = os.environ.get('PandoraTokenKey')
-        jwtHeader = jwt.get_unverified_header(accessToken)
-        try: 
-            verify = jwt.decode(refreshToken, key=tokenKey, algorithms= [jwtHeader['alg']])
-            return False
-        except ExpiredSignatureError as error:
-            return True
-
-    results = bcrypt.checkpw(password.encode('UTF-8'), hashPassword.encode())
-
-    if results == False:
+    # Checks the password
+    if  userData['results'] == False:
         return Response({
             'message': 'Username or Password is Incorrect'
         }, status = status.HTTP_400_BAD_REQUEST)
-
-    elif len(normalizer.data) == 0:
+    
+    # Checks if user exist in database
+    elif len(userData['normalizer'].data) == 0:
         return Response({
             'message': 'Username or Password is Incorrect'
         }, status.HTTP_400_BAD_REQUEST)
 
-    elif normalizer.data['first_login'] == True:
-        if normalizer.data['accessToken'] is None:
+    # First time logging in?
+    elif userData['normalizer'].data['first_login'] == True:
+        if userData['normalizer'].data['accessToken'] is None:
             accessToken = jwt.encode(
                 payload = {'exp': accessTokenExp},
                 key = os.environ.get('PandoraTokenKey'),
@@ -204,7 +224,7 @@ def loginUser(request):
                 'first_login': False,
             }
 
-            updateUser = UserSerializer(instance = user, data = updateInfo, partial = True)
+            updateUser = UserSerializer(instance = userData['user'], data = updateInfo, partial = True)
 
             if updateUser.is_valid():
                 updateUser.save()
@@ -215,20 +235,17 @@ def loginUser(request):
             else:
                 return Response({'message': 'Error updating user'}, status = status.HTTP_400_BAD_REQUEST)
 
-    # elif expiredAccess() == True:
-    # Create a condition where if access and refresh are expired create both
-    # create a condition where if access is expired create access
-
     else:
-        refreshToken = normalizer.data['token']
+        refreshToken = userData['normalizer'].data['token']
         tokenKey = os.environ.get('PandoraTokenKey')
         jwtHeader = jwt.get_unverified_header(refreshToken)
+        # Checks if refresh token has expired. If not refresh the access token
         try:
             verify = jwt.decode(refreshToken, key = tokenKey, algorithms = [jwtHeader['alg']])
             newAccessToken = jwt.encode(
                 payload = {
-                    'username': normalizer.data['username'],
-                    'password': normalizer.data['password'],
+                    'username': userData['normalizer'].data['username'],
+                    'password': userData['normalizer'].data['password'],
                     'exp': accessTokenExp,
                 },
                 key = tokenKey,
@@ -238,18 +255,23 @@ def loginUser(request):
                 'accessToken': newAccessToken
             }
 
-            updateUser = UserSerializer(instance = user, data = newAccessInfo, partial = True)
+            updateUser = UserSerializer(instance = userData['user'], data = newAccessInfo, partial = True)
             
             if updateUser.is_valid():
                 updateUser.save()
-                return Response({'message': 'new AccessToken!'})
+                return Response({
+                    'message': 'Welcome to Pandora Extravaganza!',
+                    'accessToken': newAccessToken
+                }, status = status.HTTP_200_OK)
             else:
                 return Response({'message': 'Internal Error'})
+
+        # If refresh token has expired. Create a new refresh token and refresh the access token 
         except ExpiredSignatureError as error:
             newRefreshToken = jwt.encode(
                 payload= {
-                    'username': normalizer.data['username'],
-                    'password': normalizer.data['password'],
+                    'username': userData['normalizer'].data['username'],
+                    'password': userData['normalizer'].data['password'],
                     'exp': refreshTokenExp,
                 },
                 key = tokenKey,
@@ -257,8 +279,8 @@ def loginUser(request):
 
             newAccessToken = jwt.encode(
                 payload = {
-                    'username': normalizer.data['username'],
-                    'password': normalizer.data['password'],
+                    'username': userData['normalizer'].data['username'],
+                    'password': userData['normalizer'].data['password'],
                     'exp': accessTokenExp,
                 },
                 key = tokenKey,
@@ -269,10 +291,13 @@ def loginUser(request):
                 'accessToken': newAccessToken,
             }
 
-            updateUser = UserSerializer(instance = user, data = newRefreshInfo, partial = True)
+            updateUser = UserSerializer(instance = userData['user'], data = newRefreshInfo, partial = True)
 
             if updateUser.is_valid():
                 updateUser.save()
-                return Response({'message': 'updated refresh token'})
+                return Response({
+                    'message': 'Welcome to Pandora Extravaganza',
+                    'accessToken': newAccessToken,
+                }, status = status.HTTP_200_OK)
             else:
                 return Response({'message': f'Internal Error, {error}'})

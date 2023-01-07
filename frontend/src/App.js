@@ -38,7 +38,7 @@ function App(props) {
   const mainTabs = ['Bible City','Live WebSites', 'Console Games', 'Games', 'Gaming Forum',
   'Shopping Tab', 'News Channel', 'Social Media Page', 'Math Solver', 'Closest Fast Food',
   'Optimum(Best of Anything)', 'Are We Friend/s', 'Text to Story', 'Story Designer', 'Website Review',
-  'Creative Typing', 'Ew my Voice']
+  'Creative Typing', 'Ew my Voice', 'Web Scraper']
   const [currentTab, setCurrentTab] = useState(tabTracker())
   const [loggedIn, setLoggedIn] = useState(false)
   // Profile anchor

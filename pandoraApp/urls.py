@@ -2,6 +2,8 @@ from django.urls import path
 from . import views
 from .moreViews import userViews 
 
+# Optimize views to have less endpoints
+# Have one endpoint do multiple things
 urlpatterns = [
     # Homepage
     path('', views.index, name='index'),
@@ -14,6 +16,7 @@ urlpatterns = [
     #User Endpoints
     path('users', userViews.getAll, name='getAll'),
     path('users/<int:id>', userViews.getById, name='getById'),
+    path('users/changeUser', userViews.changeUserInfo, name='changeUserInfo'),
     path('users/delete', userViews.deleteUser, name='deleteUser'),
     path('users/deleteAll', userViews.deleteAll, name='deleteAll'),
     path('users/register', userViews.registerUser, name='registerUser'),
