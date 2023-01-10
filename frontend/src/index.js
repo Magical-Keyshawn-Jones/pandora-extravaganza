@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import {createRoot} from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import { tabStorage } from './Storage/Redux';
+import { tabStorage, accessToken } from './Storage/Redux';
 
 /* 
   The location inside the html file we can to render out app.
@@ -21,6 +21,7 @@ const root = createRoot(container)
 const storage = configureStore({
   reducer: {
     tabStorage: tabStorage.reducer,
+    accessToken: accessToken.reducer,
   }
 })
 
@@ -31,5 +32,3 @@ root.render(
     </BrowserRouter>
   </Provider>
 )
-
-// export { storage };

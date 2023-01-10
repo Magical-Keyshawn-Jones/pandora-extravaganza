@@ -12,6 +12,9 @@ urlpatterns = [
     path('test/1', views.test1, name='test1'),
     path('test/2', views.test2, name='test2'),
     path('test/3', views.test3, name='test3'),
+    
+    # Tokens
+    path('users/makeToken', userViews.storingCookie, name='StoringCookie'),
 
     #User Endpoints
     path('users', userViews.getAll, name='getAll'),

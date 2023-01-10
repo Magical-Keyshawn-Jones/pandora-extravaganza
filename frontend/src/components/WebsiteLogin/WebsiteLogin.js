@@ -14,6 +14,7 @@ import {
 } from './WebsiteLogic';
 // Material Ui imports
 import {
+    Box,
     Button,
     TextField,
     Typography,
@@ -42,7 +43,7 @@ export default function WebsiteLogin(props) {
     }
 
     const errorInputs = {
-        email: 'Incorrect Email or Password',
+        username: 'Incorrect Username or Password',
         password: '',
     }
 
@@ -92,9 +93,10 @@ export default function WebsiteLogin(props) {
     // If "isOpen" is false, then set it to true, else submit the information in the form
     function registerButton() {
         if (isOpen === true){
-            if (formValues.email.length < 1 || formValues.password < 1) {
+            if (formValues.username.length < 1 || formValues.password < 1) {
                 setErrorBoolean(true)
             } else {
+                loginStatus()
                 navigate('/home')
             }
         } else {
@@ -107,7 +109,7 @@ export default function WebsiteLogin(props) {
         if (isOpen === true) {
             setIsOpen(!isOpen)
             setErrorBoolean(false)
-        } else if (formValues.email.length === 0 || formValues.password.length === 0) {
+        } else if (formValues.username.length === 0 || formValues.password.length === 0) {
             setErrorBoolean(true)
         } else {
             loginStatus()
@@ -130,23 +132,21 @@ export default function WebsiteLogin(props) {
             animate={{x: 0, opacity: 1, rotate: 360, rotateY: [0, 360], rotateX: [0,0,360], scale: [0,1]}} 
             transition={{type: 'spring', duration: 1.5, bounce: .45}} 
             className='LoginBox'>
-                {isOpen === true ?
-                <motion.div className='RegisterInputs'>
-                    <TextField className='RegisterChild' name='username' type='text' value={formValues.username} onChange={handleChanges} label='Username'/>
-                    <TextField className='RegisterChild' name='firstName' type='text' value={formValues.firstName} onChange={handleChanges}  label='First Name'/>
-                    <TextField className='RegisterChild' name='lastName' type='text' value={formValues.lastName} onChange={handleChanges}  label='Last Name'/>
-                    <TextField className='RegisterChild' name='gender' type='text' value={formValues.gender} onChange={handleChanges}  label='Gender'/>
-                </motion.div> : null}
+                {errorBoolean === true && isOpen === true ? 
+                <Box sx={{color: 'black'}}>
+                    <p>Please fill out the required fields</p>
+                </Box> : ''}
                 <TextField 
-                    name='email'
-                    type='email' 
-                    value={formValues.email}
+                    name='username'
+                    type='text' 
+                    value={formValues.username}
                     onChange={handleChanges}
                     color='primary' 
                     required 
                     error={errorBoolean} 
-                    helperText={helperTextLogic(errorBoolean, errorValues)} 
-                    label='Email Address'
+                    // If open "please user username and password" else "Username or password incorrect"
+                    helperText={helperTextLogic(errorBoolean, errorValues, isOpen)} 
+                    label='Username'
                 /> 
                 <TextField 
                     name='password' 
@@ -159,6 +159,13 @@ export default function WebsiteLogin(props) {
                     sx={{marginTop: 3}} 
                     label='Password' 
                 />
+                {isOpen === true ?
+                <motion.div className='RegisterInputs'>
+                    <TextField className='RegisterChild' name='email' type='email' value={formValues.email} onChange={handleChanges} label='Email Address'/>
+                    <TextField className='RegisterChild' name='firstName' type='text' value={formValues.firstName} onChange={handleChanges}  label='First Name'/>
+                    <TextField className='RegisterChild' name='lastName' type='text' value={formValues.lastName} onChange={handleChanges}  label='Last Name'/>
+                    <TextField className='RegisterChild' name='gender' type='text' value={formValues.gender} onChange={handleChanges}  label='Gender'/>
+                </motion.div> : null}
                 <div className='LoginButtons'>
                     <Button onClick={()=>{loginButton()}} variant='contained'>Login</Button>
                     <Button onClick={()=>{registerButton()}}>Register</Button>
@@ -170,7 +177,7 @@ export default function WebsiteLogin(props) {
                     <h5 className="card-title">Keyshawn Jones Portfolio</h5>
                     <p className="card-text">Just wanna see my portfolio. I gotch you fam</p>
                     <Link to='/portfolio' className='btn btn-primary' >Portfolio</Link>
-                </div>
+                </div>  
             </div>
         </motion.main>
     )

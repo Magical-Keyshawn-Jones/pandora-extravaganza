@@ -12,6 +12,8 @@ class Users(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True, blank=True)  # Field name made lowercase.
     username = models.CharField(db_column='Username', max_length = 100, unique = True)  # Field name made lowercase.
     password = models.TextField(db_column='Password', max_length = 100)  # Field name made lowercase.
+    email = models.TextField(db_column='Email', blank=True, null=True, max_length = 100)  # Field name made lowercase.
+    gender = models.TextField(db_column='Gender', blank=True, null=True, max_length = 100)  # Field name made lowercase.
     date_created = models.DateTimeField(db_column='Date_Created', blank=True, null=True)  # Field name made lowercase.
     token = models.TextField(db_column='Token', blank=True, null=True, max_length = 500)  # Field name made lowercase.
     accessToken = models.TextField(db_column='AccessToken', blank=True, null=True)  # Field name made lowercase. This field type is a guess.

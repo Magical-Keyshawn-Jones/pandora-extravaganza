@@ -1,10 +1,12 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fontsource/emilys-candy/400.css'
-import { useState } from 'react';
-import { connect } from 'react-redux';
+import axios from 'axios';
+import { useState, useEffect } from 'react';
+import { connect, useDispatch } from 'react-redux';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material';
+import { login, logout, selectTab } from './Storage/Redux';
 // Material Ui imports
 import {   
   AccountCircleRoundedIcon, Avatar, Box,  Drawer, Divider,
@@ -27,11 +29,14 @@ import {
 */
 
 function App(props) {
+  const { accessToken, tabStorage } = props
   const navFont = createTheme({
     typography: {
       fontFamily: ['emilys-candy'].join(',')
     }
   })
+
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   // Sidebar main tabs
   const bestTabs = ['Portfolio', 'HomePage', 'Bible City', 'Shopaganza', 'Pandorian'] 
@@ -39,8 +44,8 @@ function App(props) {
   'Shopping Tab', 'News Channel', 'Social Media Page', 'Math Solver', 'Closest Fast Food',
   'Optimum(Best of Anything)', 'Are We Friend/s', 'Text to Story', 'Story Designer', 'Website Review',
   'Creative Typing', 'Ew my Voice', 'Web Scraper']
-  const [currentTab, setCurrentTab] = useState(tabTracker())
   const [loggedIn, setLoggedIn] = useState(false)
+  const [currentTab, setCurrentTab] = useState()
   // Profile anchor
   const [profileAnchor, setProfileAnchor] = useState(null)
   const open = Boolean(profileAnchor)
@@ -54,7 +59,8 @@ function App(props) {
 
   // Using this to lift up state
   function loginStatus() {
-    setLoggedIn(!loggedIn)
+    // setLoggedIn(!loggedIn)
+    dispatch(login('newKeyToken'))
   }
 
   // Custom Themes
@@ -71,19 +77,7 @@ function App(props) {
       fontFamily: ['emilys-candy'].join(',')
     }
   })
-  // Keeps track of current tab
-  function tabTracker(){
-    const url = window.location.href;
-    if (url.includes('home')) {
-      return 'Pandora extravaganza'
-    } else if (url.includes('portfolio')) {
-      return 'Portfolio'
-    } else if (url.includes('accountMenu')) {
-      return 'AccountMenu'
-    } else {
-      return 'Login'
-    }
-  }
+
   // SideBar
   const [sideBar, setSideBar] = useState(false)
   
@@ -151,13 +145,28 @@ function App(props) {
         )
     }
   }
-  // linear-gradient(to right, #ef32d9, #89fffd)
+
+  useEffect(()=>{
+    const url = window.location.href;
+    if (accessToken !== null) {
+      console.log('token route')
+      dispatch(selectTab('Pandora extravaganza'))} 
+    else if (url.includes('home')) {dispatch(selectTab('Pandora extravaganza'))} 
+    else if (url.includes('portfolio')) {dispatch(selectTab('Portfolio'))} 
+    else {dispatch(selectTab('Login'))}
+  })
+  
+  axios.get('http://127.0.0.1:8000/users/makeToken')
+  .then(res=>{console.log(res)})
+  .catch(err=>{console.log('tuff', err)})
+
   return (
     <main id ='Website' component="main">
       <ThemeProvider theme={theme}>
         {/* Box-Shadow: H-offset, V-offset, blurRadius, SpreadRadius(optional), Color */}
       <Box sx={{boxShadow: '0 0 .5rem 4px black'}} className='NavBar'>
 
+        {/* Menu SideBar */}
         <Drawer open={sideBar} PaperProps={{sx: {background: 'linear-gradient(to right, #24243e, #302b63, #0f0c29)'}}} onClose={()=>{toggleDrawer()}}>
           <ThemeProvider theme={sideBarFont}><Typography sx={{ background: 'linear-gradient(to right, #ef32d9, #89fffd)', textAlign: 'center', height: '3rem', fontSize: '2rem'}}>
             Wassup, Kiwi!  
@@ -165,7 +174,8 @@ function App(props) {
           {mainTabs.map((item, index)=>{return listMainTabs(item)})}
         </Drawer>
 
-        <Tabs key='navBar' value={currentTab} >
+        {/* <Tabs key='navBar' value={currentTab} > */}
+        <Tabs key='navBar' value={tabStorage} >
           {tabList.map(item=>{return tabFactory(item)})}
         </Tabs>
 
@@ -224,6 +234,7 @@ function App(props) {
 function GrabbingStorage(state) {
   return {
     tabStorage: state.tabStorage,
+    accessToken: state.accessToken,
   }
 }
 export default connect(GrabbingStorage)(App);

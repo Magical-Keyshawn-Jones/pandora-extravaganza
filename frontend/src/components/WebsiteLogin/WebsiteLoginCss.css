@@ -39,7 +39,7 @@
 .RegisterChild:nth-child(2),
 .RegisterChild:nth-child(3),
 .RegisterChild:nth-child(4) {
-    margin-bottom: 1rem;
+    margin-top: 1rem;
 }
 
 .RegisterInputs {

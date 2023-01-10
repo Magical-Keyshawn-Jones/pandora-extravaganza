@@ -2,7 +2,7 @@ import * as yup from 'yup'
 
 // Form validation
 const loginForm = yup.object().shape({
-    email: yup
+    username: yup
     .string(),
 
     password: yup
@@ -10,12 +10,11 @@ const loginForm = yup.object().shape({
 })
 
 // Error Logic
-function helperTextLogic(errorBoolean,errorValues) {
-    switch(errorBoolean){
-        case true:
-            return errorValues.email
-        default:
-            return ''
+function helperTextLogic(errorBoolean,errorValues, isOpen) {
+    if (errorBoolean === true && isOpen === false) {
+        return 'Incorrect Username or Password'
+    } else {
+        return ''
     }
 }
 
