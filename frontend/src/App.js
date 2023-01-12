@@ -2,13 +2,14 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fontsource/emilys-candy/400.css'
 import axios from 'axios';
+import Cookies from 'js-cookie'
 import { useState, useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { login, logout, selectTab } from './Storage/Redux';
 // Material Ui imports
-import {   
+import {    
   AccountCircleRoundedIcon, Avatar, Box,  Drawer, Divider,
   IconButton, List, ListItemButton, 
   ListItemText, ListItemIcon, Logout, Tabs, Tab, Tooltip, Typography, Menu,  
@@ -22,11 +23,6 @@ import {
   TestingRenders,
   WebsiteLogin,
  } from './components/componentExports';
-
-/* Notes
-  @Tabs value might pose a problem if the page refreshes. If thats the case have the value = page url
-  #On open mount have the navbar transition in from the top
-*/
 
 function App(props) {
   const { accessToken, tabStorage } = props
@@ -44,8 +40,10 @@ function App(props) {
   'Shopping Tab', 'News Channel', 'Social Media Page', 'Math Solver', 'Closest Fast Food',
   'Optimum(Best of Anything)', 'Are We Friend/s', 'Text to Story', 'Story Designer', 'Website Review',
   'Creative Typing', 'Ew my Voice', 'Web Scraper']
+
+  const [tabList, setTabList] = useState(['menuIcon', 'login', 'portfolio', 'pandora extravaganza'])
+
   const [loggedIn, setLoggedIn] = useState(false)
-  const [currentTab, setCurrentTab] = useState()
   // Profile anchor
   const [profileAnchor, setProfileAnchor] = useState(null)
   const open = Boolean(profileAnchor)
@@ -59,7 +57,8 @@ function App(props) {
 
   // Using this to lift up state
   function loginStatus() {
-    // setLoggedIn(!loggedIn)
+    setLoggedIn(!loggedIn)
+    dispatch(selectTab('Pandora extravaganza'))
     dispatch(login('newKeyToken'))
   }
 
@@ -103,32 +102,35 @@ function App(props) {
   function selectedTab(tab, capTab, event, menu) {
     if (menu) {toggleDrawer()} 
     else if (tab === 'login') {
-      setCurrentTab(capTab)
+      dispatch(selectTab(capTab))
       navigate('/')
       event.preventDefault()
     } else if (tab === 'pandora extravaganza') {
-      setCurrentTab(capTab)
+      dispatch(selectTab(capTab))
       navigate('/home')
-    } else if (capTab && event) {
-      setCurrentTab(capTab)
+    } else if (capTab && event) { 
+      dispatch(selectTab(capTab))
       navigate(`/${tab}`)
       event.preventDefault()
     }
   }
   
   // Tab factory
-  // variable to keep track of login
-  const tabList = ['menuIcon', 'login', 'portfolio', 'pandora extravaganza']
   function tabFactory(name) {
     // Capitalize the first letter of a string
-    const capName = name.charAt(0).toUpperCase() + name.slice(1)
+    const capName = name === 0 ? '' : name.charAt(0).toUpperCase() + name.slice(1)
+
+    // Takes out login tab if loggedIn is True
+    if (name === 'login' && loggedIn === true) {
+        setTabList(tabList.filter(item => {return item !== 'login'}))
+        return
+    }
+
     switch(name){
       case 'login':
-        if (loggedIn === true) {return} else {
           return (
             <Tab key={capName + '.'} value={capName} label={capName} sx={{color: 'white'}} onClick={(event)=>{selectedTab(name, capName, event)}}/>
           )
-        }
       case 'menuIcon':
         return (
           <Tooltip key={capName} title='Menu'>
@@ -139,6 +141,8 @@ function App(props) {
         return (
           <Tab key={capName} value={capName} label={capName} sx={{color: 'white'}} onClick={(event)=>{selectedTab(name, capName, event)}}/>
         )
+      case 0:
+        return
       default:
         return (
           <Tab key={capName} value={capName} label={capName} sx={{color: 'white'}} onClick={(event)=>{selectedTab(name, capName, event)}}/>
@@ -149,16 +153,23 @@ function App(props) {
   useEffect(()=>{
     const url = window.location.href;
     if (accessToken !== null) {
-      console.log('token route')
-      dispatch(selectTab('Pandora extravaganza'))} 
+    // Use this block of code to send the user back to the login page. set login status to false. Make sure to use dispatch for tabStorage
+     return 
+    }
     else if (url.includes('home')) {dispatch(selectTab('Pandora extravaganza'))} 
     else if (url.includes('portfolio')) {dispatch(selectTab('Portfolio'))} 
     else {dispatch(selectTab('Login'))}
+    console.log(tabStorage)
   })
-  
-  axios.get('http://127.0.0.1:8000/users/makeToken')
-  .then(res=>{console.log(res)})
-  .catch(err=>{console.log('tuff', err)})
+   
+  useEffect(()=>{
+        // This is Only to test the would be output if I wasn't using localhost:3000
+    axios.get('http://127.0.0.1:8000/users/makeToken')
+    .then(res=>{
+      Cookies.set('access_token', res.data.access_token)
+    })
+    .catch(err=>{console.log('tuff', err)})
+  },[])
 
   return (
     <main id ='Website' component="main">
@@ -176,7 +187,7 @@ function App(props) {
 
         {/* <Tabs key='navBar' value={currentTab} > */}
         <Tabs key='navBar' value={tabStorage} >
-          {tabList.map(item=>{return tabFactory(item)})}
+           {tabList.map(item=>{return tabFactory(item)})}
         </Tabs>
 
         {loggedIn === false ? <ThemeProvider theme={navFont}><Typography sx={{ color: 'white', fontSize: '1.5rem'}}>Sign or Register to enjoy your stay</Typography></ThemeProvider> : null}

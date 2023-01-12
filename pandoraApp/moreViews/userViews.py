@@ -4,8 +4,6 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from jwt.exceptions import ExpiredSignatureError
 from datetime import datetime, timedelta
-from requests.cookies import create_cookie
-from requests.cookies import RequestsCookieJar
 from django.http import JsonResponse
 import http.cookies
 import os
@@ -24,58 +22,10 @@ import bcrypt
 current_datetime = datetime.today()
 refreshTokenExp = current_datetime + timedelta(days= 90)
 accessTokenExp = current_datetime + timedelta(days=60)
+
 # Used to testing responses
 yup = {'message': 'it works!!!'}
 nope = {'message': 'it Sucks!'}
-
-def login(request):
-    # ...
-    # Generate an access token
-    access_token = 'generate_access_token()Here'
-    # Set the `HttpOnly` flag and store the access token in cookies
-    response = JsonResponse({'access_token': access_token})
-    response.set_cookie('access_token', access_token, httponly=True)
-    return response
-
-# Stores the access token in http only cookie
-def set_access_token(response, access_token):
-    # Create a new cookie
-    # 1 # cookie = create_cookie('access_token', access_token)
-    cookie = http.cookies.SimpleCookie()
-
-    # Set the cookie value to the access token 
-    cookie['access_token'] = access_token
-
-    # Set the expiration time of the cookie to 1 hour
-    hours = 60 * 8
-    # cookie.expires = hours
-    cookie['access_token']['expires'] = hours
-
-    # Set the cookie domain to the current domain
-    # cookie.domain = 'http://127.0.0.1:8000/'
-    cookie['access_token']['domain'] = 'http://127.0.0.1:8000/'
-    # cookie.domain = 'https://pandora-extravaganza.herokuapp.com/'
-
-    # Set the cookie path to the root directory 
-    # cookie.path = '/'
-    cookie['access_token']['path'] ='/'
-
-    # Set the secure flag
-    # cookie.secure = True
-    cookie['access_token']['secure'] = True
-
-    # Set the HTTP-only flag
-    # cookie.httponly = True
-    cookie['access_token']['httponly'] = True
-
-    # Convert the cookie to a RequestsCookieJar object
-    # jar = RequestsCookieJar()
-    # jar.update(cookie)
-
-    # Set the cookie in the response
-    # response.cookies.set_cookie(cookie)
-    response.set_cookie("access_token", access_token, expires=3600, domain='http://127.0.0.1:8000/', path="/", secure=True, httponly=True)
-    response.set_cookie("access_token", access_token, expires=3600, domain='localhost', path="/", secure=True, httponly=True)
 
 # Encrypts a password and returns the stringHash
 def encryptPassword(password):
@@ -371,8 +321,22 @@ def loginUser(request):
 def storingCookie(request):
     # ...
     # Generate an access token
-    access_token = 'generate_access_token()Here'
+    access_token = 'Amazing token here!'
     # Set the `HttpOnly` flag and store the access token in cookies
-    response = JsonResponse({'access_token': access_token})
+    response = Response({'access_token': access_token})
     response.set_cookie('access_token', access_token, httponly=True)
+    return response
+
+@api_view(['GET'])
+def protectedView(request):
+    try:
+        access_token = request.COOKIES.get('access_token')
+        return Response({'message': access_token})
+    except:
+        return Response({'message': 'Error, no token found'})
+
+@api_view(['GET'])
+def deleteCookie(request):
+    response = Response({'message': 'Successfully deleted cookie'})
+    response.delete_cookie('access_token')
     return response

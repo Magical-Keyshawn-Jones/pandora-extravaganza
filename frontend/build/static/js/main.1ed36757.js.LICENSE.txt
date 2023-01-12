@@ -4,6 +4,8 @@
 	http://jedwatson.github.io/classnames
 */
 
+/*! js-cookie v3.0.1 | MIT */
+
 /**
  * @license React
  * react-dom.production.min.js

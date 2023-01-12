@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// const navTabs = ['HomePage', 'Login', 'Example']
 const tabStorage = createSlice({
     name: 'Tabs',
     initialState: 'Login',
@@ -18,7 +17,6 @@ const accessToken = createSlice({
 
     reducers: {
         login(state, action) {
-            console.log('yes sir!')
             return state = action.payload
         },
 

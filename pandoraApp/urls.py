@@ -15,6 +15,8 @@ urlpatterns = [
     
     # Tokens
     path('users/makeToken', userViews.storingCookie, name='StoringCookie'),
+    path('users/isToken', userViews.protectedView, name='protectedView'),
+    path('users/deleteToken', userViews.deleteCookie, name='deleteToken'),
 
     #User Endpoints
     path('users', userViews.getAll, name='getAll'),
