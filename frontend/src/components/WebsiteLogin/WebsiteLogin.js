@@ -1,12 +1,16 @@
 import './WebsiteLoginCss.css';
 import '@fontsource/emilys-candy/400.css';
-import * as React from 'react'
-import ProfilePic from '../../Storage/Images/Portfolio/Profile_Pic.jpg';
+import axios from 'axios'
+import Cookies from 'js-cookie';
 import * as yup from 'yup';
+import * as React from 'react'
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useDispatch } from 'react-redux';
+import { selectTab } from '../../Storage/Redux';
+import { useNavigate, Link } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material';
+import ProfilePic from '../../Storage/Images/Portfolio/Profile_Pic.jpg';
 // Importing Function logic
 import {
     loginForm,
@@ -24,7 +28,8 @@ import {
 // in the bottom right corner offer to show my Portfolio first for employers
 
 export default function WebsiteLogin(props) {
-    const { loginStatus } = props
+    const { loginStatus, setTabs } = props
+    const dispatch = useDispatch()
     const theme = createTheme({
         typography: {
             fontFamily: ['emilys-candy'].join(',')
@@ -88,6 +93,12 @@ export default function WebsiteLogin(props) {
         }
     //
 
+    // // Cookie Grabber
+    // function getCookie(name) {
+    //     const value = '; ' + document.cookie
+    //     const parts = value.split('; ' + name + '=')
+    //     if(parts.length === 2) return parts.pop().split(';').shift()
+    // }
      
     // Button functions
     // If "isOpen" is false, then set it to true, else submit the information in the form
@@ -109,16 +120,39 @@ export default function WebsiteLogin(props) {
         if (isOpen === true) {
             setIsOpen(!isOpen)
             setErrorBoolean(false)
+            setFormValues({
+                username: formValues.username,
+                password: formValues.password,
+            })
         } else if (formValues.username.length === 0 || formValues.password.length === 0) {
             setErrorBoolean(true)
         } else {
-            loginStatus()
-            navigate('/home')
+            // loginStatus()
+            // navigate('/home')
+            setFormValues({
+                username: formValues.username,
+                password: formValues.password,
+            })
+            axios.post('http://127.0.0.1:8000/users/login', formValues)
+            .then(res => {
+                if (res.data.error) {setErrorBoolean(true)}
+                else {
+                    // dispatch(login(res.data.accessToken))
+                    Cookies.set('access_token', res.data.accessToken)
+                    loginStatus()
+                    navigate('/home')
+                }
+            })
+            .catch(err => {
+                console.log('Error!', err.response.data)
+                setErrorBoolean(true)
+            })
         }
     }
-
+    
     return ( 
         <motion.main className='WebsiteLogin'> 
+        {/* Title above the login form */}
             <header className='WebsiteTitle'> {/*Give each letter a span with a dynamic className to animate the Title*/}
                 <motion.h1 initial={{scale: .1}} animate={{scale: 1, skew:360, rotateY: 360}} transition={{duration: 2}} className='WebsiteTitle'>
                     <ThemeProvider theme={theme}>
@@ -126,6 +160,7 @@ export default function WebsiteLogin(props) {
                     </ThemeProvider>
                     </motion.h1>
             </header>
+            {/* The login form */}
             <motion.div layout 
             style={{ height: isOpen ? '40rem' : '20rem', marginTop: isOpen ? '1rem' : '5rem'}} 
             initial={{x: 700, scale: .1, opacity: 0}} 
@@ -171,6 +206,7 @@ export default function WebsiteLogin(props) {
                     <Button onClick={()=>{registerButton()}}>Register</Button>
                 </div>
             </motion.div>
+            {/* The bottom left portfolio section */}
             <div className="card position-absolute align-self-start" style={{ width: "18rem", top: "49vh"}}>
                 <img src={ProfilePic} className="card-img-top" alt="Profile_Picture"/>
                 <div className="card-body">

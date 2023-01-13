@@ -39,18 +39,18 @@ def userChecker(request):
     try:
         username = request.data['username']
     except:
-        return Response({'message': 'username is required'}, status = status.HTTP_400_BAD_REQUEST)
+        return Response({'error': 'username is required'}, status = status.HTTP_400_BAD_REQUEST)
     
     try:
         password = request.data['password']
     except:
-        return Response({'message': 'password is required'}, status = status.HTTP_400_BAD_REQUEST)
+        return Response({'error': 'password is required'}, status = status.HTTP_400_BAD_REQUEST)
     
     try:
         user = Users.objects.get(username = username)
     except:
         return Response({
-            'message': 'Username or Password is Incorrect'
+            'error': 'Username or Password is Incorrect'
         }, status = status.HTTP_404_NOT_FOUND)
 
 
@@ -60,7 +60,7 @@ def userChecker(request):
     results = bcrypt.checkpw(password.encode('UTF-8'), hashPassword.encode())
     
     if results == False:
-        return Response({'message': 'Username or Password is Incorrect'})
+        return Response({'error': 'Username or Password is Incorrect'})
     else:
         return {
             'results': results,
@@ -73,13 +73,13 @@ def accessToken(request):
     try:
         jwtHeader = jwt.get_unverified_header(request.data['token'])
     except:
-        return Response({'message': 'Token is not correct or invalid'})
+        return Response({'error': 'Token is not correct or invalid'})
     try:
         verify = jwt.decode(request.data['token'], key = os.environ.get('PandoraTokenKey'), algorithms = [jwtHeader['alg']])
         return Response({'message': verify})
     except ExpiredSignatureError as error:
         print(current_datetime)
-        return Response({'message': f"Unable to decode the token, error: {error}"})
+        return Response({'error': f"Unable to decode the token, error: {error}"})
 
 # Retrieves all users
 @api_view(['GET'])
@@ -100,7 +100,7 @@ def getById(request, id):
         if x['id'] == id:
             requestedUser = x
     if requestedUser == '':
-        return Response({'message': 'user with that id does not exist'}, status = status.HTTP_404_NOT_FOUND) 
+        return Response({'error': 'user with that id does not exist'}, status = status.HTTP_404_NOT_FOUND) 
     return Response({'id': requestedUser['id'], 'username': requestedUser['username'], 'admin': requestedUser['admin']}, status = status.HTTP_200_OK)
 
 # Delete all users
@@ -125,7 +125,7 @@ def deleteUser(request):
     try:
         user = Users.objects.get(username = request.data['username'])
     except:
-        return Response({'message': f"The user with the username of '{request.data['username']}' does not exist"}, status = status.HTTP_404_NOT_FOUND)
+        return Response({'error': f"The user with the username of '{request.data['username']}' does not exist"}, status = status.HTTP_404_NOT_FOUND)
     
     user.delete()
     return Response({'message': f"{request.data['username']} successfully deleted"})
@@ -152,7 +152,7 @@ def changeUserInfo(request):
         userChanges.save()
         return Response({'message': 'Successfully made the changes to the user'}, status = status.HTTP_200_OK)
     else:
-        return Response({'message': 'Error implementing changes. Changes were not made.'}, status = status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response({'error': 'Error implementing changes. Changes were not made.'}, status = status.HTTP_500_INTERNAL_SERVER_ERROR)
     
     
 
@@ -169,7 +169,7 @@ def registerUser(request):
         getUsers = Users.objects.get(username = username)
         normalizer = UserSerializer(getUsers, many = False)
         return Response({
-            'message': f"A user with username of '{username}' already exist"
+            'error': f"A user with username of '{username}' already exist"
         }, status = status.HTTP_400_BAD_REQUEST)
     # If not Hashes and stores the password and Creates a refresh token along with the user 
     except:
@@ -215,13 +215,13 @@ def loginUser(request):
     # Checks the password
     if  userData['results'] == False:
         return Response({
-            'message': 'Username or Password is Incorrect'
+            'error': 'Username or Password is Incorrect'
         }, status = status.HTTP_400_BAD_REQUEST)
     
     # Checks if user exist in database
     elif len(userData['normalizer'].data) == 0:
         return Response({
-            'message': 'Username or Password is Incorrect'
+            'error': 'Username or Password is Incorrect'
         }, status.HTTP_400_BAD_REQUEST)
 
     # First time logging in?
@@ -247,7 +247,7 @@ def loginUser(request):
                     'accessToken': accessToken,
                 })
             else:
-                return Response({'message': 'Error updating user'}, status = status.HTTP_400_BAD_REQUEST)
+                return Response({'error': 'Error updating user'}, status = status.HTTP_400_BAD_REQUEST)
 
     else:
         refreshToken = userData['normalizer'].data['token']
@@ -278,7 +278,7 @@ def loginUser(request):
                     'accessToken': newAccessToken
                 }, status = status.HTTP_200_OK)
             else:
-                return Response({'message': 'Internal Error'})
+                return Response({'error': 'Internal Error'})
 
         # If refresh token has expired. Create a new refresh token and refresh the access token 
         except ExpiredSignatureError as error:
@@ -314,7 +314,7 @@ def loginUser(request):
                     'accessToken': newAccessToken,
                 }, status = status.HTTP_200_OK)
             else:
-                return Response({'message': f'Internal Error, {error}'})
+                return Response({'error': f'Internal Error, {error}'})
 
 # Testing cookie storage
 @api_view(['GET'])
@@ -333,7 +333,7 @@ def protectedView(request):
         access_token = request.COOKIES.get('access_token')
         return Response({'message': access_token})
     except:
-        return Response({'message': 'Error, no token found'})
+        return Response({'Error': 'No token found'})
 
 @api_view(['GET'])
 def deleteCookie(request):

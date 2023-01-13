@@ -35,13 +35,13 @@ function App(props) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   // Sidebar main tabs
-  const bestTabs = ['Portfolio', 'HomePage', 'Bible City', 'Shopaganza', 'Pandorian'] 
+  const navBarTabs = ['menuIcon', 'login', 'portfolio', 'pandora extravaganza']
   const mainTabs = ['Bible City','Live WebSites', 'Console Games', 'Games', 'Gaming Forum',
   'Shopping Tab', 'News Channel', 'Social Media Page', 'Math Solver', 'Closest Fast Food',
   'Optimum(Best of Anything)', 'Are We Friend/s', 'Text to Story', 'Story Designer', 'Website Review',
   'Creative Typing', 'Ew my Voice', 'Web Scraper']
 
-  const [tabList, setTabList] = useState(['menuIcon', 'login', 'portfolio', 'pandora extravaganza'])
+  const [tabList, setTabList] = useState(navBarTabs)
 
   const [loggedIn, setLoggedIn] = useState(false)
   // Profile anchor
@@ -57,9 +57,8 @@ function App(props) {
 
   // Using this to lift up state
   function loginStatus() {
-    setLoggedIn(!loggedIn)
+    setLoggedIn(true)
     dispatch(selectTab('Pandora extravaganza'))
-    dispatch(login('newKeyToken'))
   }
 
   // Custom Themes
@@ -120,61 +119,60 @@ function App(props) {
     // Capitalize the first letter of a string
     const capName = name === 0 ? '' : name.charAt(0).toUpperCase() + name.slice(1)
 
-    // Takes out login tab if loggedIn is True
-    if (name === 'login' && loggedIn === true) {
-        setTabList(tabList.filter(item => {return item !== 'login'}))
-        return
-    }
-
     switch(name){
       case 'login':
           return (
-            <Tab key={capName + '.'} value={capName} label={capName} sx={{color: 'white'}} onClick={(event)=>{selectedTab(name, capName, event)}}/>
+            <Tab key={capName + '.'} value={capName} label={capName} sx={{
+              color: 'white', 
+              display: loggedIn === true ? 'none' : 'default',
+              marginLeft: loggedIn === true ? 'default' : '5rem'
+            }} onClick={(event)=>{selectedTab(name, capName, event)}}/>
           )
       case 'menuIcon':
         return (
           <Tooltip key={capName} title='Menu'>
-            <Tab key={capName} value={capName} sx={{color: 'white'}} icon={<MenuRoundedIcon/>} onClick={(event)=>{selectedTab(name, capName, event, true)}}/>
+            <Tab key={capName} value={capName} sx={{color: 'white', display: loggedIn === true ? 'default' : 'none'}} icon={<MenuRoundedIcon/>} onClick={(event)=>{selectedTab(name, capName, event, true)}}/>
           </Tooltip>
         )
       case 'pandora extravaganza':
         return (
-          <Tab key={capName} value={capName} label={capName} sx={{color: 'white'}} onClick={(event)=>{selectedTab(name, capName, event)}}/>
+          <Tab key={capName} value={capName} label={capName} sx={{color: 'white', display: loggedIn === true ? 'default' : 'none',}} onClick={(event)=>{selectedTab(name, capName, event)}}/>
         )
       case 0:
         return
       default:
         return (
-          <Tab key={capName} value={capName} label={capName} sx={{color: 'white'}} onClick={(event)=>{selectedTab(name, capName, event)}}/>
+          <Tab key={capName} value={capName} label={capName} sx={{color: 'white', display: loggedIn === true ? 'default' : 'none'}} onClick={(event)=>{selectedTab(name, capName, event)}}/>
         )
     }
   }
 
+  // Cookie Grabber
+  function getCookie(name) {
+    const value = '; ' + document.cookie
+    const parts = value.split('; ' + name + '=')
+    if(parts.length === 2) return parts.pop().split(';').shift()
+  } 
+
+  // Deletes Cookie
+  function removeCookie(name) {
+    var expires = "expires=" + new Date(0).toUTCString();
+    document.cookie = name + "=" + "; " + expires;
+  }
+
   useEffect(()=>{
     const url = window.location.href;
-    if (accessToken !== null) {
-    // Use this block of code to send the user back to the login page. set login status to false. Make sure to use dispatch for tabStorage
-     return 
-    }
-    else if (url.includes('home')) {dispatch(selectTab('Pandora extravaganza'))} 
-    else if (url.includes('portfolio')) {dispatch(selectTab('Portfolio'))} 
-    else {dispatch(selectTab('Login'))}
-    console.log(tabStorage)
+    if (url === 'http://localhost:3000/home' || url === 'https://pandora-extravaganza.herokuapp.com/home') {dispatch(selectTab('Pandora extravaganza'))} 
+    else if (url === 'http://localhost:3000/portfolio' || url === 'https://pandora-extravaganza.herokuapp.com/portfolio') {dispatch(selectTab('Portfolio'))} 
+    else if (url === 'http://localhost:3000/' || url === 'https://pandora-extravaganza.herokuapp.com/') {dispatch(selectTab('Login'))}
   })
-   
-  useEffect(()=>{
-        // This is Only to test the would be output if I wasn't using localhost:3000
-    axios.get('http://127.0.0.1:8000/users/makeToken')
-    .then(res=>{
-      Cookies.set('access_token', res.data.access_token)
-    })
-    .catch(err=>{console.log('tuff', err)})
-  },[])
 
+  useEffect(()=>{if (getCookie('access_token') === undefined) {setLoggedIn(false)} else setLoggedIn(true)},[])
+  useEffect(()=>{if (getCookie('access_token') === undefined) {setLoggedIn(false)} else setLoggedIn(true)},[loggedIn])
+   
   return (
     <main id ='Website' component="main">
       <ThemeProvider theme={theme}>
-        {/* Box-Shadow: H-offset, V-offset, blurRadius, SpreadRadius(optional), Color */}
       <Box sx={{boxShadow: '0 0 .5rem 4px black'}} className='NavBar'>
 
         {/* Menu SideBar */}
@@ -185,7 +183,6 @@ function App(props) {
           {mainTabs.map((item, index)=>{return listMainTabs(item)})}
         </Drawer>
 
-        {/* <Tabs key='navBar' value={currentTab} > */}
         <Tabs key='navBar' value={tabStorage} >
            {tabList.map(item=>{return tabFactory(item)})}
         </Tabs>
@@ -221,17 +218,22 @@ function App(props) {
           <Avatar /> My Profile
         </MenuItem>
         <Divider/>
-        <MenuItem>
+        <MenuItem onClick={()=>{
+          setLoggedIn(false)
+          removeCookie('access_token')
+          dispatch(selectTab('Login'))
+          navigate('/')
+        }}>
           <ListItemIcon>
             {/* Size of the Icon */}
-            <Logout fontSize='small' />
+            <Logout fontSize='small'/>
           </ListItemIcon>
           Logout
         </MenuItem>
       </Menu>
 
       <Routes>
-        <Route path='/' element={<WebsiteLogin loginStatus={loginStatus} />}/>
+        <Route path='/' element={<WebsiteLogin loginStatus={loginStatus}/>}/>
         <Route path='/home' element={<HomePage/>}/>
         <Route path='/portfolio' element={<Portfolio/>}/>
         <Route path='/testingRenders' element={<TestingRenders/>}/>

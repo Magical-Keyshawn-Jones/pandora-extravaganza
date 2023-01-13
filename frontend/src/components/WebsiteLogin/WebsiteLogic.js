@@ -2,11 +2,12 @@ import * as yup from 'yup'
 
 // Form validation
 const loginForm = yup.object().shape({
-    username: yup
-    .string(),
-
-    password: yup
-    .string()
+    username: yup.string(),
+    password: yup.string(),
+    firstName: yup.string(),
+    lastName: yup.string(),
+    gender: yup.string(),
+    email: yup.string(),
 })
 
 // Error Logic
