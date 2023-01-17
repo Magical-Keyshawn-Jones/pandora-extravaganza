@@ -197,11 +197,19 @@ def registerUser(request):
             'token': refreshToken,
         }
 
+        for key, value in request.data.items():
+            if key == 'username' or key == 'password':
+                None
+            else:
+                user[key] = value
+            
+        
         serializer = UserSerializer(data = user)
         if serializer.is_valid():
             serializer.save()
         return Response({
-            'message': 'Successfully created User!'
+            'message': 'Successfully created User!',
+            'something': user
         }, status = status.HTTP_201_CREATED)
 
 # User Logging In 

@@ -1,13 +1,11 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fontsource/emilys-candy/400.css'
-import axios from 'axios';
-import Cookies from 'js-cookie'
 import { useState, useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material';
-import { login, logout, selectTab } from './Storage/Redux';
+import { selectTab } from './Storage/Redux';
 // Material Ui imports
 import {    
   AccountCircleRoundedIcon, Avatar, Box,  Drawer, Divider,
@@ -21,11 +19,11 @@ import {
   PageNotFound,
   Portfolio, 
   TestingRenders,
-  WebsiteLogin,
+  WebsiteLogin, 
  } from './components/componentExports';
 
 function App(props) {
-  const { accessToken, tabStorage } = props
+  const { tabStorage } = props
   const navFont = createTheme({
     typography: {
       fontFamily: ['emilys-candy'].join(',')
@@ -41,14 +39,25 @@ function App(props) {
   'Optimum(Best of Anything)', 'Are We Friend/s', 'Text to Story', 'Story Designer', 'Website Review',
   'Creative Typing', 'Ew my Voice', 'Web Scraper']
 
-  const [tabList, setTabList] = useState(navBarTabs)
-
+  const [username, setUsername] = useState('GreatWordsOfWisdomIsHere!')
+  const [serverResponse, setServerResponse] = useState(null)
   const [loggedIn, setLoggedIn] = useState(false)
   // Profile anchor
   const [profileAnchor, setProfileAnchor] = useState(null)
   const open = Boolean(profileAnchor)
   // State of Anchor
   const [profileOpen, setProfileOpen] = useState(false)
+
+  // Sets Username from WebsiteLogin component
+  function changeUsername(username) {
+    setUsername(username)
+  }
+
+  // Changes Server Response in WebsiteLogin component
+  function changeServerResponse(server) {
+    setServerResponse(server)
+  }
+
   //Hooking profile handler
   function hookProfileAnchor(event){
     setProfileAnchor(event.currentTarget)
@@ -129,7 +138,7 @@ function App(props) {
             }} onClick={(event)=>{selectedTab(name, capName, event)}}/>
           )
       case 'menuIcon':
-        return (
+        return ( 
           <Tooltip key={capName} title='Menu'>
             <Tab key={capName} value={capName} sx={{color: 'white', display: loggedIn === true ? 'default' : 'none'}} icon={<MenuRoundedIcon/>} onClick={(event)=>{selectedTab(name, capName, event, true)}}/>
           </Tooltip>
@@ -138,12 +147,16 @@ function App(props) {
         return (
           <Tab key={capName} value={capName} label={capName} sx={{color: 'white', display: loggedIn === true ? 'default' : 'none',}} onClick={(event)=>{selectedTab(name, capName, event)}}/>
         )
+      case 'portfolio':
+        return (
+          <Tab key={capName} value={capName} label={capName} sx={{color: 'white'}} onClick={(event)=>{selectedTab(name, capName, event)}}/>
+        )
       case 0:
         return
       default:
         return (
           <Tab key={capName} value={capName} label={capName} sx={{color: 'white', display: loggedIn === true ? 'default' : 'none'}} onClick={(event)=>{selectedTab(name, capName, event)}}/>
-        )
+        ) 
     }
   }
 
@@ -157,14 +170,15 @@ function App(props) {
   // Deletes Cookie
   function removeCookie(name) {
     var expires = "expires=" + new Date(0).toUTCString();
+    // eslint-disable-next-line no-useless-concat
     document.cookie = name + "=" + "; " + expires;
   }
 
   useEffect(()=>{
     const url = window.location.href;
-    if (url === 'http://localhost:3000/home' || url === 'https://pandora-extravaganza.herokuapp.com/home') {dispatch(selectTab('Pandora extravaganza'))} 
-    else if (url === 'http://localhost:3000/portfolio' || url === 'https://pandora-extravaganza.herokuapp.com/portfolio') {dispatch(selectTab('Portfolio'))} 
-    else if (url === 'http://localhost:3000/' || url === 'https://pandora-extravaganza.herokuapp.com/') {dispatch(selectTab('Login'))}
+    if (url.includes('http://localhost:3000/home') || url.includes('https://pandora-extravaganza.herokuapp.com/home')) {dispatch(selectTab('Pandora extravaganza'))} 
+    else if (url.includes('http://localhost:3000/portfolio') || url.includes('https://pandora-extravaganza.herokuapp.com/portfolio')) {dispatch(selectTab('Portfolio'))} 
+    else if (url.includes('http://localhost:3000/') || url.includes('https://pandora-extravaganza.herokuapp.com/')) {dispatch(selectTab('Login'))}
   })
 
   useEffect(()=>{if (getCookie('access_token') === undefined) {setLoggedIn(false)} else setLoggedIn(true)},[])
@@ -177,14 +191,17 @@ function App(props) {
 
         {/* Menu SideBar */}
         <Drawer open={sideBar} PaperProps={{sx: {background: 'linear-gradient(to right, #24243e, #302b63, #0f0c29)'}}} onClose={()=>{toggleDrawer()}}>
-          <ThemeProvider theme={sideBarFont}><Typography sx={{ background: 'linear-gradient(to right, #ef32d9, #89fffd)', textAlign: 'center', height: '3rem', fontSize: '2rem'}}>
-            Wassup, Kiwi!  
-          </Typography></ThemeProvider>
+          {/* Top of the SideBar drawer */}
+          <ThemeProvider theme={sideBarFont}>
+            <Typography sx={{ background: 'linear-gradient(to right, #ef32d9, #89fffd)', textAlign: 'center', height: '3rem', fontSize: '2rem'}}>
+              {`Wassup, ${username}!`}
+            </Typography>
+          </ThemeProvider>
           {mainTabs.map((item, index)=>{return listMainTabs(item)})}
         </Drawer>
 
         <Tabs key='navBar' value={tabStorage} >
-           {tabList.map(item=>{return tabFactory(item)})}
+           {navBarTabs.map(item=>{return tabFactory(item)})}
         </Tabs>
 
         {loggedIn === false ? <ThemeProvider theme={navFont}><Typography sx={{ color: 'white', fontSize: '1.5rem'}}>Sign or Register to enjoy your stay</Typography></ThemeProvider> : null}
@@ -222,6 +239,7 @@ function App(props) {
           setLoggedIn(false)
           removeCookie('access_token')
           dispatch(selectTab('Login'))
+          setServerResponse(null)
           navigate('/')
         }}>
           <ListItemIcon>
@@ -233,7 +251,10 @@ function App(props) {
       </Menu>
 
       <Routes>
-        <Route path='/' element={<WebsiteLogin loginStatus={loginStatus}/>}/>
+        <Route path='/' element={<WebsiteLogin 
+        loginStatus={loginStatus} changeUsername={changeUsername} 
+        changeServerResponse={changeServerResponse} 
+        serverResponse={serverResponse} />}/>
         <Route path='/home' element={<HomePage/>}/>
         <Route path='/portfolio' element={<Portfolio/>}/>
         <Route path='/testingRenders' element={<TestingRenders/>}/>

@@ -6,15 +6,12 @@ import * as yup from 'yup';
 import * as React from 'react'
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { useDispatch } from 'react-redux';
-import { selectTab } from '../../Storage/Redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material';
 import ProfilePic from '../../Storage/Images/Portfolio/Profile_Pic.jpg';
 // Importing Function logic
 import {
     loginForm,
-    helperTextLogic,    
 } from './WebsiteLogic';
 // Material Ui imports
 import {
@@ -28,8 +25,7 @@ import {
 // in the bottom right corner offer to show my Portfolio first for employers
 
 export default function WebsiteLogin(props) {
-    const { loginStatus, setTabs } = props
-    const dispatch = useDispatch()
+    const { loginStatus, changeUsername, changeServerResponse, serverResponse } = props
     const theme = createTheme({
         typography: {
             fontFamily: ['emilys-candy'].join(',')
@@ -40,66 +36,67 @@ export default function WebsiteLogin(props) {
     // Initial States
     const formInputs = {
         username: '',
-        firstName: '',
-        lastName: '',
+        first_Name: '',
+        last_Name: '',
         gender: '',
         email: '',
         password: '',
     }
 
-    const errorInputs = {
-        username: 'Incorrect Username or Password',
-        password: '',
-    }
-
     const [formValues, setFormValues, handleChanges] = useInput(formInputs)
-    const [errorValues, setErrorValues] = useState(errorInputs)
     const [errorBoolean, setErrorBoolean] = useState(false)
+    // Email error for incorrect email. Later optimize this so it flows with the other errors all in one state or function
+    const [emailError, setEmailError] = useState(false)
+    
     // Tracker for Login container
     const [isOpen, setIsOpen] = useState(false)
 
     // Form/Input Logic
-        // Validator Function
-        function validator(name, value) {
-            yup.reach(loginForm, name)
-            .validate(value)
-            .then(()=> setErrorBoolean(false))
-            .catch(()=> setErrorBoolean(true))
-        }
+    // Validator Function
+    function validator(name, value) {
+        yup.reach(loginForm, name)
+        .validate(value)
+        .then(()=> setErrorBoolean(false))
+        .catch(()=>{if (name === 'email') {setEmailError(true)} else setErrorBoolean(true)})
+    }
 
-        //Custom Hook helper
-        function change(name, value) {
-            setFormValues({...formValues, [name]: value})
+    //Custom Hook helper
+    function change(name, value) {
+        setFormValues({...formValues, [name]: value})
 
-            validator(name, value) 
-        }
+        validator(name, value) 
+    }
         
-        // Custom Hook for onChange
-        function useInput (startingValue) {
-            const [value, setValue] = useState(startingValue)
+    // Custom Hook for onChange
+    function useInput (startingValue) {
+        const [value, setValue] = useState(startingValue)
 
-            function handleChanges(event) {
-                // Grabbing Values
-                const { name, type, checked, value } = event.target
+        function handleChanges(event) {
+            // Grabbing Values
+            const { name, type, checked, value } = event.target
 
-                // Setting correct checkbox values
-                const checkboxValue = type === 'checkbox' ? checked : value
+            // Setting correct checkbox values
+            const checkboxValue = type === 'checkbox' ? checked : value
                 
-                // Changes form values
-                change(name, checkboxValue)
-            }
-
-            return [value, setValue, handleChanges]
+            // Changes form values
+            change(name, checkboxValue)
         }
-    //
 
-    // // Cookie Grabber
-    // function getCookie(name) {
-    //     const value = '; ' + document.cookie
-    //     const parts = value.split('; ' + name + '=')
-    //     if(parts.length === 2) return parts.pop().split(';').shift()
-    // }
-     
+        return [value, setValue, handleChanges]
+    }
+
+    // Used to only send filled out areas of the form
+    function specificLetter(){
+        const newLetter = {}
+        for (const [key, value] of Object.entries(formValues)) {
+            if (value.length >= 1) {
+                newLetter[key] = value
+            }
+        }
+        return newLetter
+    }
+
+
     // Button functions
     // If "isOpen" is false, then set it to true, else submit the information in the form
     function registerButton() {
@@ -107,12 +104,26 @@ export default function WebsiteLogin(props) {
             if (formValues.username.length < 1 || formValues.password < 1) {
                 setErrorBoolean(true)
             } else {
-                loginStatus()
-                navigate('/home')
+                axios.post('http://127.0.0.1:8000/users/register', specificLetter())
+                .then(res => {
+                    if (res.data.error) {setErrorBoolean(true)}
+                    else {
+                        Cookies.set('access_token', res.data.accessToken)
+                        changeUsername(formValues.username)
+                        loginStatus()
+                        navigate('/home')
+                    }
+                })
+                .catch(err => {
+                    console.log(err.response.data.error)
+                    changeServerResponse(err.response.data.error)
+                    setErrorBoolean(true)
+                })
             }
         } else {
             setIsOpen(!isOpen)
             setErrorBoolean(false)
+            changeServerResponse(null)
         }
     }
 
@@ -120,34 +131,76 @@ export default function WebsiteLogin(props) {
         if (isOpen === true) {
             setIsOpen(!isOpen)
             setErrorBoolean(false)
+            changeServerResponse(null)
             setFormValues({
                 username: formValues.username,
                 password: formValues.password,
+                email: '',
+                first_name: '',
+                last_name: '',
+                gender: '',
             })
         } else if (formValues.username.length === 0 || formValues.password.length === 0) {
             setErrorBoolean(true)
         } else {
-            // loginStatus()
-            // navigate('/home')
             setFormValues({
                 username: formValues.username,
                 password: formValues.password,
             })
             axios.post('http://127.0.0.1:8000/users/login', formValues)
             .then(res => {
-                if (res.data.error) {setErrorBoolean(true)}
+                if (res.data.error) {
+                    // Triggers when username is correct but password isn't
+                    setErrorBoolean(true)
+                    changeServerResponse(res.data.error)
+                }
                 else {
-                    // dispatch(login(res.data.accessToken))
                     Cookies.set('access_token', res.data.accessToken)
+                    changeUsername(formValues.username)
                     loginStatus()
                     navigate('/home')
                 }
             })
             .catch(err => {
                 console.log('Error!', err.response.data)
+                changeServerResponse(err.response.data.error)
                 setErrorBoolean(true)
             })
         }
+    }
+
+    // Returns certain errors
+    function returningErrors(){
+        if (errorBoolean === true && isOpen === true && serverResponse === null) {
+            return (
+                <Box sx={{color: 'black'}}>
+                    <p>Please fill out the required fields</p>
+                </Box>
+            )
+        }
+        else if (errorBoolean === true && isOpen === true && serverResponse !== null) {
+            return (
+                <Box sx={{color: 'black'}}>
+                    <p>{serverResponse}</p>
+                </Box> 
+            )
+        }
+        else if (errorBoolean === true && isOpen === false) {
+            if (formValues.username.length <= 0 || formValues.password.length <= 0) {
+                return (
+                    <Box sx={{color: 'black'}}>
+                        <p>Please fill out the required fields</p>
+                    </Box> 
+                )
+            } else if (serverResponse !== null) {
+                return (
+                    <Box sx={{color: 'black'}}>
+                        <p>Username or Password is Incorrect</p>
+                    </Box>
+                )
+            }
+        }
+        else return ''
     }
     
     return ( 
@@ -167,10 +220,7 @@ export default function WebsiteLogin(props) {
             animate={{x: 0, opacity: 1, rotate: 360, rotateY: [0, 360], rotateX: [0,0,360], scale: [0,1]}} 
             transition={{type: 'spring', duration: 1.5, bounce: .45}} 
             className='LoginBox'>
-                {errorBoolean === true && isOpen === true ? 
-                <Box sx={{color: 'black'}}>
-                    <p>Please fill out the required fields</p>
-                </Box> : ''}
+                {returningErrors()}
                 <TextField 
                     name='username'
                     type='text' 
@@ -179,11 +229,9 @@ export default function WebsiteLogin(props) {
                     color='primary' 
                     required 
                     error={errorBoolean} 
-                    // If open "please user username and password" else "Username or password incorrect"
-                    helperText={helperTextLogic(errorBoolean, errorValues, isOpen)} 
                     label='Username'
                 /> 
-                <TextField 
+                <TextField  
                     name='password' 
                     type='password' 
                     value={formValues.password}
@@ -196,9 +244,14 @@ export default function WebsiteLogin(props) {
                 />
                 {isOpen === true ?
                 <motion.div className='RegisterInputs'>
-                    <TextField className='RegisterChild' name='email' type='email' value={formValues.email} onChange={handleChanges} label='Email Address'/>
-                    <TextField className='RegisterChild' name='firstName' type='text' value={formValues.firstName} onChange={handleChanges}  label='First Name'/>
-                    <TextField className='RegisterChild' name='lastName' type='text' value={formValues.lastName} onChange={handleChanges}  label='Last Name'/>
+                    <TextField 
+                    className='RegisterChild' name='email' type='email' value={formValues.email} 
+                    onChange={handleChanges} 
+                    error={formValues.email.length === 0 ? false : emailError} 
+                    helperText={formValues.email.length === 0 || emailError === false ? '' : 'Invalid Email Address'} 
+                    label='Email Address'/>
+                    <TextField className='RegisterChild' name='first_name' type='text' value={formValues.first_name} onChange={handleChanges}  label='First Name'/>
+                    <TextField className='RegisterChild' name='last_name' type='text' value={formValues.last_name} onChange={handleChanges}  label='Last Name'/>
                     <TextField className='RegisterChild' name='gender' type='text' value={formValues.gender} onChange={handleChanges}  label='Gender'/>
                 </motion.div> : null}
                 <div className='LoginButtons'>

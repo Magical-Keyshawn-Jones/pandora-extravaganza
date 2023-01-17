@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/static/css/main.9f137936.css",
-    "main.js": "/static/js/main.1ed36757.js",
+    "main.js": "/static/js/main.d194acca.js",
     "static/media/Profile_Pic.jpg": "/static/media/Profile_Pic.d58a89306205a9573755.jpg",
     "static/media/emilys-candy-all-400-normal.woff": "/static/media/emilys-candy-all-400-normal.a91a531dec2017c49d3e.woff",
     "static/media/emilys-candy-latin-400-normal.woff2": "/static/media/emilys-candy-latin-400-normal.586710be3fe831b2ad8b.woff2",
     "static/media/emilys-candy-latin-ext-400-normal.woff2": "/static/media/emilys-candy-latin-ext-400-normal.20b0766c10ff18932299.woff2",
     "index.html": "/index.html",
     "main.9f137936.css.map": "/static/css/main.9f137936.css.map",
-    "main.1ed36757.js.map": "/static/js/main.1ed36757.js.map"
+    "main.d194acca.js.map": "/static/js/main.d194acca.js.map"
   },
   "entrypoints": [
     "static/css/main.9f137936.css",
-    "static/js/main.1ed36757.js"
+    "static/js/main.d194acca.js"
   ]
 }
