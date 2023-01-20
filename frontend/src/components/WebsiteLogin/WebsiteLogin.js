@@ -150,7 +150,6 @@ export default function WebsiteLogin(props) {
             axios.post('http://127.0.0.1:8000/users/login', formValues)
             .then(res => {
                 if (res.data.error) {
-                    // Triggers when username is correct but password isn't
                     setErrorBoolean(true)
                     changeServerResponse(res.data.error)
                 }
@@ -162,8 +161,10 @@ export default function WebsiteLogin(props) {
                 }
             })
             .catch(err => {
-                console.log('Error!', err.response.data)
+                // Triggers when username is correct but password isn't
+                console.log(err.response.data.error)
                 changeServerResponse(err.response.data.error)
+                console.log('triggered')
                 setErrorBoolean(true)
             })
         }
@@ -245,11 +246,7 @@ export default function WebsiteLogin(props) {
                 {isOpen === true ?
                 <motion.div className='RegisterInputs'>
                     <TextField 
-                    className='RegisterChild' name='email' type='email' value={formValues.email} 
-                    onChange={handleChanges} 
-                    error={formValues.email.length === 0 ? false : emailError} 
-                    helperText={formValues.email.length === 0 || emailError === false ? '' : 'Invalid Email Address'} 
-                    label='Email Address'/>
+                    className='RegisterChild' name='email' type='email' value={formValues.email} onChange={handleChanges} label='Email Address'/>
                     <TextField className='RegisterChild' name='first_name' type='text' value={formValues.first_name} onChange={handleChanges}  label='First Name'/>
                     <TextField className='RegisterChild' name='last_name' type='text' value={formValues.last_name} onChange={handleChanges}  label='Last Name'/>
                     <TextField className='RegisterChild' name='gender' type='text' value={formValues.gender} onChange={handleChanges}  label='Gender'/>
