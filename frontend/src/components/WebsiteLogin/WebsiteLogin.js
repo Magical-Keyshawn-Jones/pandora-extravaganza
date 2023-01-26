@@ -45,8 +45,6 @@ export default function WebsiteLogin(props) {
 
     const [formValues, setFormValues, handleChanges] = useInput(formInputs)
     const [errorBoolean, setErrorBoolean] = useState(false)
-    // Email error for incorrect email. Later optimize this so it flows with the other errors all in one state or function
-    const [emailError, setEmailError] = useState(false)
     
     // Tracker for Login container
     const [isOpen, setIsOpen] = useState(false)
@@ -57,7 +55,7 @@ export default function WebsiteLogin(props) {
         yup.reach(loginForm, name)
         .validate(value)
         .then(()=> setErrorBoolean(false))
-        .catch(()=>{if (name === 'email') {setEmailError(true)} else setErrorBoolean(true)})
+        .catch(()=> setErrorBoolean(true))
     }
 
     //Custom Hook helper
@@ -245,8 +243,7 @@ export default function WebsiteLogin(props) {
                 />
                 {isOpen === true ?
                 <motion.div className='RegisterInputs'>
-                    <TextField 
-                    className='RegisterChild' name='email' type='email' value={formValues.email} onChange={handleChanges} label='Email Address'/>
+                    <TextField className='RegisterChild' name='email' type='email' value={formValues.email} onChange={handleChanges} label='Email Address'/>
                     <TextField className='RegisterChild' name='first_name' type='text' value={formValues.first_name} onChange={handleChanges}  label='First Name'/>
                     <TextField className='RegisterChild' name='last_name' type='text' value={formValues.last_name} onChange={handleChanges}  label='Last Name'/>
                     <TextField className='RegisterChild' name='gender' type='text' value={formValues.gender} onChange={handleChanges}  label='Gender'/>

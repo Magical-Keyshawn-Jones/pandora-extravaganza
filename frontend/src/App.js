@@ -23,9 +23,9 @@ import {
  } from './components/componentExports';
 
 function App(props) {
-  const { tabStorage } = props
+  const { tabStorage, width } = props
   const navFont = createTheme({
-    typography: {
+    typography: { 
       fontFamily: ['emilys-candy'].join(',')
     }
   })
