@@ -18,12 +18,11 @@ import {
   HomePage,
   PageNotFound,
   Portfolio, 
-  TestingRenders,
   WebsiteLogin, 
  } from './components/componentExports';
 
 function App(props) {
-  const { tabStorage, width } = props
+  const { tabStorage } = props
   const navFont = createTheme({
     typography: { 
       fontFamily: ['emilys-candy'].join(',')
@@ -257,7 +256,6 @@ function App(props) {
         serverResponse={serverResponse} />}/>
         <Route path='/home' element={<HomePage/>}/>
         <Route path='/portfolio' element={<Portfolio/>}/>
-        <Route path='/testingRenders' element={<TestingRenders/>}/>
         <Route path='*' element={<PageNotFound/>}/>
       </Routes>
     </main>
