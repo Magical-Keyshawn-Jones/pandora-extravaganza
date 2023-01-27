@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get('pandoraKey')
 # DEBUG = True
 DEBUG = False
 
-ALLOWED_HOSTS = ['*', 'pandora-extravaganza.herokuapp.com/']
+ALLOWED_HOSTS = ['*', 'pandora-extravaganza.herokuapp.com/', '.vercel.app']
 CORS_ALLOW_ALL_ORIGINS = True
 
 

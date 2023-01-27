@@ -229,6 +229,7 @@ export default function WebsiteLogin(props) {
                     required 
                     error={errorBoolean} 
                     label='Username'
+                    placeholder='Username'
                 /> 
                 <TextField  
                     name='password' 
@@ -240,6 +241,7 @@ export default function WebsiteLogin(props) {
                     error={errorBoolean} 
                     sx={{marginTop: 3}} 
                     label='Password' 
+                    placeholder='Password'
                 />
                 {isOpen === true ?
                 <motion.div className='RegisterInputs'>
@@ -249,8 +251,8 @@ export default function WebsiteLogin(props) {
                     <TextField className='RegisterChild' name='gender' type='text' value={formValues.gender} onChange={handleChanges}  label='Gender'/>
                 </motion.div> : null}
                 <div className='LoginButtons'>
-                    <Button onClick={()=>{loginButton()}} variant='contained'>Login</Button>
-                    <Button onClick={()=>{registerButton()}}>Register</Button>
+                    <Button testId='loginButton' onClick={()=>{loginButton()}} variant='contained'>Login</Button>
+                    <Button testId='registerButton' onClick={()=>{registerButton()}}>Register</Button>
                 </div>
             </motion.div>
             {/* The bottom left portfolio section */}
