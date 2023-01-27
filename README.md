@@ -2,6 +2,7 @@
 Imagine being in a place with so much to do and super convenient you wouldn't want to leave. I'm creating it.
 
 *Website*-https://pandora-extravaganza.vercel.app/
+
 *linkedIn*-https://www.linkedin.com/in/keyshawn-jones-a399a122a
 
 User Story so far
@@ -12,7 +13,7 @@ User Story so far
 -User is welcomed into the homepage
 -User is given tons of options of what they can do. Like a mall
 
-So far the user starts off with a simple login page. What does my login do?
+Waht does my login/register do?
 
 -The user uses fake credentials to sign or register
 
