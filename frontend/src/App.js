@@ -205,7 +205,7 @@ function App(props) {
 
         {loggedIn === false ? <ThemeProvider theme={navFont}><Typography sx={{ color: 'white', fontSize: '1.5rem'}}>Sign or Register to enjoy your stay</Typography></ThemeProvider> : null}
 
-        <Tooltip title='Account settings'>
+        <Tooltip title='Account Settings' name='Account Settings'>
           <IconButton onClick={(event)=>{hookProfileAnchor(event)}} >
             <AccountCircleRoundedIcon sx={{width: '3rem', height: '3rem', color: 'white',}}/>
           </IconButton>
@@ -234,7 +234,7 @@ function App(props) {
           <Avatar /> My Profile
         </MenuItem>
         <Divider/>
-        <MenuItem onClick={()=>{
+        <MenuItem name='Logout' onClick={()=>{
           setLoggedIn(false)
           removeCookie('access_token')
           dispatch(selectTab('Login'))

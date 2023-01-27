@@ -21,6 +21,7 @@ import {
     Typography,
   } from '../../Storage/MuiExports';
 
+// *Note* Shrink text to fix for same username error
 //   Make Login Page loud or you're not done and it is not professional
 // in the bottom right corner offer to show my Portfolio first for employers
 
@@ -169,6 +170,7 @@ export default function WebsiteLogin(props) {
     }
 
     // Returns certain errors
+    // *Note* Shrink text to fix for same username error
     function returningErrors(){
         if (errorBoolean === true && isOpen === true && serverResponse === null) {
             return (
@@ -219,6 +221,7 @@ export default function WebsiteLogin(props) {
             animate={{x: 0, opacity: 1, rotate: 360, rotateY: [0, 360], rotateX: [0,0,360], scale: [0,1]}} 
             transition={{type: 'spring', duration: 1.5, bounce: .45}} 
             className='LoginBox'>
+                {/*Note* Shrink text to fix for same username error*/}
                 {returningErrors()}
                 <TextField 
                     name='username'
@@ -229,7 +232,6 @@ export default function WebsiteLogin(props) {
                     required 
                     error={errorBoolean} 
                     label='Username'
-                    placeholder='Username'
                 /> 
                 <TextField  
                     name='password' 
@@ -241,7 +243,6 @@ export default function WebsiteLogin(props) {
                     error={errorBoolean} 
                     sx={{marginTop: 3}} 
                     label='Password' 
-                    placeholder='Password'
                 />
                 {isOpen === true ?
                 <motion.div className='RegisterInputs'>
@@ -251,8 +252,8 @@ export default function WebsiteLogin(props) {
                     <TextField className='RegisterChild' name='gender' type='text' value={formValues.gender} onChange={handleChanges}  label='Gender'/>
                 </motion.div> : null}
                 <div className='LoginButtons'>
-                    <Button testId='loginButton' onClick={()=>{loginButton()}} variant='contained'>Login</Button>
-                    <Button testId='registerButton' onClick={()=>{registerButton()}}>Register</Button>
+                    <Button onClick={()=>{loginButton()}} variant='contained'>Login</Button>
+                    <Button onClick={()=>{registerButton()}}>Register</Button>
                 </div>
             </motion.div>
             {/* The bottom left portfolio section */}
