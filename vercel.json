@@ -1,13 +1,10 @@
 {
-    "builds": [{
-        "src": "pandoraBackend/wsgi.py",
-        "use": "@vercel/python",
-        "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
-    }],
+    "version": 2,
+    "builds": [
+      { "src": "public/**/*", "use": "@vercel/static" }
+    ],
     "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "pandoraBackend/wsgi.py"
-        }
+      { "src": "/(.*)", "dest": "public/index.html" }
     ]
-}
+  }
+  
