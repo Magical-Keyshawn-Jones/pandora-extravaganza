@@ -134,7 +134,7 @@ function App(props) {
     switch(name){
       case 'login':
           return (
-            <Tab key={capName + '.'} value={capName} label={capName} sx={{
+            <Tab key={capName + '.'} id='ResponsiveLogin' value={capName} label={capName} sx={{
               color: 'white', 
               display: loggedIn === true ? 'none' : 'default',
               marginLeft: loggedIn === true ? 'default' : '5rem'
@@ -161,7 +161,7 @@ function App(props) {
           <Tab key={capName} value={capName} label={capName} sx={{color: 'white', display: loggedIn === true ? 'default' : 'none'}} onClick={(event)=>{selectedTab(name, capName, event)}}/>
         ) 
     }
-  }
+  } 
 
   // Cookie Grabber
   function getCookie(name) {
@@ -177,15 +177,17 @@ function App(props) {
     document.cookie = name + "=" + "; " + expires;
   }
 
+  // Checks client's url to correct dictate the correct tab highlight
   useEffect(()=>{
     const url = window.location.href;
-    if (url.includes('http://localhost:3000/home') || url.includes('https://pandora-extravaganza.herokuapp.com/home')) {dispatch(selectTab('Pandora extravaganza'))} 
-    else if (url.includes('http://localhost:3000/portfolio') || url.includes('https://pandora-extravaganza.herokuapp.com/portfolio')) {dispatch(selectTab('Portfolio'))} 
-    else if (url.includes('http://localhost:3000/') || url.includes('https://pandora-extravaganza.herokuapp.com/')) {dispatch(selectTab('Login'))}
+    if (url.includes('http://localhost:3000/home') || url.includes('https://pandora-extravaganza.vercel.app/home')) {dispatch(selectTab('Pandora extravaganza'))} 
+    else if (url.includes('http://localhost:3000/portfolio') || url.includes('https://pandora-extravaganza.vercel.app/portfolio')) {dispatch(selectTab('Portfolio'))} 
+    else if (url.includes('http://localhost:3000/') || url.includes('https://pandora-extravaganza.vercel.app/')) {dispatch(selectTab('Login'))}
   })
 
-  useEffect(()=>{if (getCookie('access_token') === undefined) {setLoggedIn(false)} else setLoggedIn(true)},[])
-  useEffect(()=>{if (getCookie('access_token') === undefined) {setLoggedIn(false)} else setLoggedIn(true)},[loggedIn])
+  // Checks the client's cookie for cookies
+  useEffect(()=>{if (getCookie('access_token') === undefined && getCookie('access_token') !== 'Admin') {setLoggedIn(false)} else setLoggedIn(true)},[])
+  useEffect(()=>{if (getCookie('access_token') === undefined && getCookie('access_token') !== 'Admin') {setLoggedIn(false)} else setLoggedIn(true)},[loggedIn])
    
   return (
     <main id ='Website' component="main">
@@ -207,7 +209,7 @@ function App(props) {
            {navBarTabs.map(item=>{return tabFactory(item)})}
         </Tabs>
 
-        {loggedIn === false ? <ThemeProvider theme={navFont}><Typography sx={{ color: 'white', fontSize: '1.5rem'}}>Sign or Register to enjoy your stay</Typography></ThemeProvider> : null}
+        {loggedIn === false ? <ThemeProvider theme={navFont}><Typography id='ResponsiveNavText' sx={{ color: 'white', fontSize: '1.5rem'}}>Sign or Register to enjoy your stay</Typography></ThemeProvider> : null}
 
         <Tooltip title='Account Settings' name='Account Settings'>
           <IconButton onClick={(event)=>{hookProfileAnchor(event)}} >

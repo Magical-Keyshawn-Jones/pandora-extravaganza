@@ -142,6 +142,13 @@ export default function WebsiteLogin(props) {
         } else if (formValues.username.length === 0 || formValues.password.length === 0) {
             setErrorBoolean(true)
         } else {
+            // Bypass Login
+            if (formValues.username === 'Admin') {
+                Cookies.set('access_token', 'Admin')
+                changeUsername(formValues.username)
+                loginStatus()
+                navigate('/home')
+            }
             setFormValues({
                 username: formValues.username,
                 password: formValues.password,
@@ -210,7 +217,7 @@ export default function WebsiteLogin(props) {
             <header className='WebsiteTitle'> {/*Give each letter a span with a dynamic className to animate the Title*/}
                 <motion.h1 initial={{scale: .1}} animate={{scale: 1, skew:360, rotateY: 360}} transition={{duration: 2}} className='WebsiteTitle'>
                     <ThemeProvider theme={theme}>
-                    <Typography sx={{ fontSize: '4rem'}}>Pandora Extravaganza!</Typography>
+                    <Typography id='ResponsiveWebsiteTitle' sx={{ fontSize: '4rem'}}>Pandora Extravaganza!</Typography>
                     </ThemeProvider>
                     </motion.h1>
             </header>
@@ -257,7 +264,7 @@ export default function WebsiteLogin(props) {
                 </div>
             </motion.div>
             {/* The bottom left portfolio section */}
-            <div className="card position-absolute align-self-start" style={{ width: "18rem", top: "49vh"}}>
+            <div className="PortfolioCard card position-absolute align-self-start" style={{ width: "18rem", top: "49vh"}}>
                 <img src={ProfilePic} className="card-img-top" alt="Profile_Picture"/>
                 <div className="card-body">
                     <h5 className="card-title">Keyshawn Jones Portfolio</h5>

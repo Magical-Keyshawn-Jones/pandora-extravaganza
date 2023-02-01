@@ -2,6 +2,7 @@
     background: linear-gradient(to left, #ffc0cb, #800080);
     height: 100%;
     width: 100%;
+    position: fixed;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -51,4 +52,23 @@
 
 .WebsiteTitle.h1 {
     text-align: center;
+}
+
+/* Responsive Design */
+@media( 320px <= width <= 375px ) {
+    #ResponsiveWebsiteTitle {
+        font-size: 1.3rem !important;
+    }
+
+    .WebsiteTitle {
+        text-align: center;
+    }
+
+    .PortfolioCard {
+        display: none;
+    }
+
+    .LoginBox {
+        margin-top: .5rem !important;
+    }
 }
