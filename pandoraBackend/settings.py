@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pandoraApp',
-    # 'pandoraApp.apps.PandoraappConfig',
     'corsheaders',
     'rest_framework',
 ]
