@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material';
-import { selectTab } from './Storage/Redux';
+import { selectTab } from './Storage/Redux'; 
 // Material Ui imports
 import {    
   AccountCircleRoundedIcon, Avatar, Box,  Drawer, Divider,
@@ -20,6 +20,10 @@ import {
   Portfolio, 
   WebsiteLogin, 
  } from './components/componentExports';
+
+// Change website logo so I don't get sued down the road
+// Add weather element in navBar to always tell the weather
+// "proxy": "https://land-of-gaming.herokuapp.com/",
 
 function App(props) {
   const { tabStorage } = props

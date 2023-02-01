@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'pandoraApp.apps.PandoraappConfig',
+    'pandoraApp',
+    # 'pandoraApp.apps.PandoraappConfig',
     'corsheaders',
     'rest_framework',
 ]
@@ -131,7 +132,6 @@ django_heroku.settings(locals())
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_DIRS = [
-    'public',
     os.path.join(BASE_DIR, 'frontend/build/static'),
 ]
 
