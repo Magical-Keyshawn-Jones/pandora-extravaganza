@@ -227,6 +227,7 @@ function App(props) {
       onClose={()=>{setProfileAnchor(null)}}
       onClick={()=>{setProfileAnchor(null)}}
       transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+      anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       className='Account'
       PaperProps={{
         sx: {

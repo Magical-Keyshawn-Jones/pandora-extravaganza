@@ -48,14 +48,32 @@
 
 @media( 375px <= width <= 425px ) {
     .NavBar {
-        background: yellow;
+        width: 100%;
+        /* height: 2.8rem; */
+    }
+
+    #ResponsiveNavText {
+        display: none;
+    }
+
+    #ResponsiveLogin {
+        margin-left: 1rem;
     }
 }
 
 
 @media( 425px <= width <= 768px ) {
     .NavBar {
-        background: purple;
+        width: 100%;
+        /* height: 2.8rem; */
+    }
+
+    #ResponsiveNavText {
+        display: none;
+    }
+
+    #ResponsiveLogin {
+        margin-left: 1rem;
     }
 }
 
