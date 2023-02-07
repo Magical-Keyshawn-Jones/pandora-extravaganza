@@ -15,15 +15,13 @@ import {
 } from './Storage/MuiExports';
 // Component imports 
 import { 
-  HomePage,
-  PageNotFound,
-  Portfolio, 
-  WebsiteLogin, 
+  HomePage,PageNotFound,
+  Portfolio,WebsiteLogin, 
+  TestingPage, Calculator,
  } from './components/componentExports';
 
 // Change website logo so I don't get sued down the road
 // Add weather element in navBar to always tell the weather
-// "proxy": "https://land-of-gaming.herokuapp.com/",
 
 function App(props) {
   const { tabStorage } = props
@@ -136,6 +134,7 @@ function App(props) {
           return (
             <Tab key={capName + '.'} id='ResponsiveLogin' value={capName} label={capName} sx={{
               color: 'white', 
+              // fontSize: '5rem',
               display: loggedIn === true ? 'none' : 'default',
               marginLeft: loggedIn === true ? 'default' : '5rem'
             }} onClick={(event)=>{selectedTab(name, capName, event)}}/>
@@ -205,8 +204,9 @@ function App(props) {
           {mainTabs.map((item, index)=>{return listMainTabs(item)})}
         </Drawer>
 
-        <Tabs key='navBar' value={tabStorage} >
+        <Tabs key='navBar' value={tabStorage}>
            {navBarTabs.map(item=>{return tabFactory(item)})}
+           <Tab label='TestingPage' value='TestingPage' onClick={()=>{navigate('/testingPage')}} />
         </Tabs>
 
         {loggedIn === false ? <ThemeProvider theme={navFont}><Typography id='ResponsiveNavText' sx={{ color: 'white', fontSize: '1.5rem'}}>Sign or Register to enjoy your stay</Typography></ThemeProvider> : null}
@@ -263,7 +263,11 @@ function App(props) {
         serverResponse={serverResponse} />}/>
         <Route path='/home' element={<HomePage/>}/>
         <Route path='/portfolio' element={<Portfolio/>}/>
+        <Route path='/testingPage' element={<TestingPage/>}/>
         <Route path='*' element={<PageNotFound/>}/>
+
+        {/* In Development */}
+        <Route path='/calculator' element={<Calculator/>}/>
       </Routes>
     </main>
   )

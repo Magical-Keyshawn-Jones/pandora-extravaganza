@@ -1,0 +1,108 @@
+.CalculatorPage {
+    /* padding-top: 15rem; */
+    background: pink;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.Calculator {
+    /* width: clamp(18rem, 25rem, 25rem); */
+    /* height: clamp(0, 90%, 30rem); */
+    background: grey;
+    height: 90%;
+    max-height: 30rem;
+    width: 25rem;
+    max-width: 25rem;
+    border: 1px solid black;
+}
+
+.Calculator p {
+    margin: 0;
+    font-size: 3rem;
+    background: white;
+    text-align: right;
+    padding-right: .5rem;
+}
+
+.ValueDisplay {
+    border-bottom: 1px solid black;
+}
+
+.CalculatorButtons {
+    position: relative;
+    background: grey;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    height: 85%;
+    gap: .5rem;
+    padding: .5rem;
+    font-size: 2rem;
+}
+
+.CalculatorButtons img {
+    height: 3.5rem;
+}
+
+.CalculatorButtonChild {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid purple;
+    background: white;
+}
+
+.CalculatorButtonChild:nth-child(1) {
+    grid-area: 1 / span 2
+}
+.CalculatorButtonChild:nth-child(2) {
+    grid-area: 1
+}
+.CalculatorButtonChild:nth-child(3) {
+    grid-area: 2
+}
+.CalculatorButtonChild:nth-child(4) {
+    grid-area: 2 / 2
+}
+.CalculatorButtonChild:nth-child(5) {
+    grid-area: 2 / 3
+}
+.CalculatorButtonChild:nth-child(6) {
+    grid-area: 3 / 1
+}
+.CalculatorButtonChild:nth-child(7) {
+    grid-area: 3 / 2
+}
+.CalculatorButtonChild:nth-child(8) {
+    grid-area: 3 / 3
+}
+.CalculatorButtonChild:nth-child(9) {
+    grid-area: 4 / 1
+}
+.CalculatorButtonChild:nth-child(10) {
+    grid-area: 4 / 2
+}
+.CalculatorButtonChild:nth-child(11) {
+    grid-area: 4 / 3
+}
+.CalculatorButtonChild:nth-child(12) {
+    grid-area: 5 / 1
+}
+.CalculatorButtonChild:nth-child(13) {
+    grid-area: 5 / 2
+}
+.CalculatorButtonChild:nth-child(14) {
+    grid-area: 5 / 3
+}
+.CalculatorButtonChild:nth-child(15) {
+    grid-area: 4 / 4
+}
+
+/* Responsive Designs */
+@media (height <= 430px) {
+    .Calculator {
+        position: relative;
+    }
+}

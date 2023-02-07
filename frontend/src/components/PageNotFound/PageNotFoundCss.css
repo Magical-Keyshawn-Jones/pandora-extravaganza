@@ -2,3 +2,95 @@
     background: pink;
     padding-top: 19rem;
 }
+
+
+.BestGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+    gap: 1rem;
+    /* Clamp === minWidth, width, maxWidth */
+    width: clamp(10rem, 100%, 50rem);
+    height: clamp(10rem, 100%, 50rem);
+}
+
+.BestGrid div {
+    background: white;
+    border: 1px black solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.GoodieBox {
+    display: flex;
+    position: relative;
+}
+
+.DessertBox {
+    position: relative;
+    z-index: 1;
+    background: white;
+    height: clamp(10rem, 100%, 20rem);
+    width: clamp(10rem, 100%, 20rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    aspect-ratio: 1/1;
+}
+
+.DessertBox img {
+    height: 100%;
+    width: 100%;
+}
+
+.Details {
+    /* display: none; */
+    position: relative;
+    z-index: 0;
+    right: 15rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: pink;
+    width: 20%;
+    text-align: center;
+    padding: 0 .5rem;
+}
+
+.ListItems {
+    left: 10rem;
+    position: relative;
+    z-index: 0;
+    background: white;
+}
+
+@keyframes ItemsMoveLeft {
+    0% {
+        transform: translateX(0)
+    }
+
+    100% {
+        transform: translateX(-10rem)
+    }
+}
+
+.ItemsMoveLeft {
+    animation: ItemsMoveLeft .5s linear;
+    animation-fill-mode: forwards; 
+}
+
+@keyframes DetailsMoveRight {
+    0% {
+        transform: translateX(0)
+    }
+
+    100% {
+        transform: translateX(15rem)
+    }
+}
+
+.DetailsMoveRight {
+    animation: DetailsMoveRight .5s linear;
+    animation-fill-mode: forwards;
+}

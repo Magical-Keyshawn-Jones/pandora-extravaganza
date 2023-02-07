@@ -227,7 +227,8 @@ export default function WebsiteLogin(props) {
             initial={{x: 700, scale: .1, opacity: 0}} 
             animate={{x: 0, opacity: 1, rotate: 360, rotateY: [0, 360], rotateX: [0,0,360], scale: [0,1]}} 
             transition={{type: 'spring', duration: 1.5, bounce: .45}} 
-            className='LoginBox'>
+            className='LoginBox'
+            id={'ResponsiveLogin'} >
                 {/*Note* Shrink text to fix for same username error*/}
                 {returningErrors()}
                 <TextField 

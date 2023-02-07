@@ -1,0 +1,48 @@
+body {
+    background: pink;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.TestingCalculator {
+    position: relative;
+    top: 10rem;
+    background: gray;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    width: 20rem;
+}
+
+.TestingCalculator input {
+    width: clamp(5rem, 100%, 100%);
+    font-size: 3rem;
+}
+
+.DisplayValue {
+    width: 98.7%;
+}
+
+.BigNumbers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    /* grid-template-areas: 
+    "Clear None None"
+    "Seven Eight Nine"
+    "Four Five Six"
+    "One Two Three"
+    "None Zero None"; */
+}
+
+.ButtonClear {
+    grid-column: span 3;
+    grid-row: 3rem;
+    height: 3rem;
+}
+
+.ButtonNumber {
+    height: 5rem;
+}
