@@ -1,96 +1,48 @@
-body {
+/* 
+    CSS Notes:
+    box-shadow: [horizontal offset] [vertical offset] [blur radius] [optional spread radius] [color];
+    background: linear-gradient(to right, #ad5389, #3c1053);
+    linear-gradient(to right, #8e9eab, #eef2f3)
+*/
+
+/* Default padding for all pages */
+.Homepage {
+    padding: 1rem 1rem 0 1rem;
+}
+
+.AppPage {
     height: 100%;
-    width: 100%;
+    width: 100%; 
+    /* min-height: max-content; */
+    background: linear-gradient(to top, #360033, #0b8793);
 }
 
-html {
-    height: 100%;
-    width: 100%;
-}
-
-#root {
-    width: 100%;
-    height: 100%;
-}
-
-#Website {
-    height: 100%;
-    width: 100%;
-}
-
-.big {
-    padding-top: 3rem;
-}
-
-.NavBar {
+.AppNavBar {
+    background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+    color: white;
+    height: 6%;
+    min-height: 3.5rem;
+    font-size: 1em;
+    box-shadow: 0 1px 1rem black;
+    animation: HomeNavBar .7s ease-in forwards;
+    position: relative;
+    top: -.2rem;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-right: 5%;
-    background: #0f0c29;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #24243e, #302b63, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    flex-direction: row-reverse;
+}
+
+@keyframes HomeNavBar {
+    from {
+        transform: translateY(-5rem)
+    }
+
+    to {
+        transform: translateY(5%)
+    }
+}
+
+.Routes {
+    height: 94%;
+    min-height: 55rem;
     width: 100%;
-    position: relative;  
-    z-index: 1; 
-    text-align: center;
 }
-
-.NavBar span {
-    color: #ff00ea;
-    font-size: 2rem;
-}
-
-/* Responsive Designs */
-
-@media( 320px <= width <= 375px ) {
-    .NavBar {
-        width: 100%;
-        /* height: 2.8rem; */
-    }
-
-    #ResponsiveNavText {
-        display: none;
-    }
-}
-
-@media( 375px <= width <= 425px ) {
-    .NavBar {
-        /* width: 100%; */
-        height: 2.8rem;
-    }
-
-    #ResponsiveNavText {
-        display: none;
-    }
-}
-
-
-@media( 425px <= width <= 768px ) {
-    .NavBar {
-        width: 100%;
-        /* height: 2.8rem; */
-    }
-
-    #ResponsiveNavText {
-        display: none;
-    }
-}
-
-@media( 768px <= width <= 1024px ) {
-    .NavBar {
-        background: rgb(42, 165, 124);
-    }
-}
-
-@media( 1025px <= width <= 1200px ) {
-    .NavBar {
-        background: blue;
-    }
-}
-
-/* @media ( width >= 1440px ) {
-    .NavBar {
-        background: rgb(0, 225, 255);
-    }
-} */

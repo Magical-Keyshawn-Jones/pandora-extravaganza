@@ -1,9 +1,9 @@
-import './HomePageCss.css';
+import './Homepage.css'
 
-export default function HomePage() {
-    return ( 
-        <div className='HomePage'>
-            <p className='underline'>Welcome to my HomePage!</p>
-        </div>
+export default function Homepage() {
+    return (
+        <main className='Homepage'>
+            <p>Welcome to the homepage!</p>
+        </main>
     )
 }
