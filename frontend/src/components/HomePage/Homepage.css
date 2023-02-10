@@ -1,4 +1,209 @@
+/* 
+    Make 3D title using perspective, skew, rotate, and maybe scale
+        - have title do something on hover like get bigger or colorful 
+        animation: pandoraTop ease-in .8s forwards;
+        transform: perspective(500px) rotateX(30deg) rotateY(45deg);
+        text-shadow: 2px 2px 4px #000; 
+        text-shadow: 
+        1px 1px #fe4902, 
+        2px 2px #ffffff, 
+        2px 2px #ffffff, 
+        2rem 2rem #00ffc8, 
+        2px 2px #ffffff, 
+        2px 2px #fe4902, 
+        3px 3px #fe4902;
+*/
+
 .Homepage {
     width: 100%;
-    height: 100%; 
+    height: 100%;
+    min-height: 100vh;
+    animation: overflowManagement ease-in 5s forwards
+
+}
+
+@keyframes overflowManagement {
+    from {
+        overflow: hidden
+    }
+
+    to {
+        overflow: default
+    }
+}
+
+.Homepage header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 20rem;
+    color: black;
+}
+
+.Homepage header h1 {
+    font-size: 7em;
+}
+
+.Homepage header p {
+    font-size: 2em;
+}
+
+.HomeHeaderTitle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.PandoraContainer {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.PandoraTitle:nth-child(1) {
+    animation: pandoraTop ease-in .8s forwards;
+}
+
+.PandoraTitle:nth-child(2) {
+    animation: pandoraRight ease-in .7s forwards;
+    animation-delay: .8s;
+    opacity: 0;
+}
+
+.FatabulousContainer {
+    display: flex;
+    gap: .5rem;
+}
+
+.fatabulousHeader:nth-child(1) {
+    animation: f1 ease-in-out .5s forwards;
+    animation-delay: 1.5s;
+    opacity: 0;
+}
+.fatabulousHeader:nth-child(2) {
+    animation: f2 ease-in-out .5s forwards;
+    animation-delay: 1.7s;
+    opacity: 0;
+}
+.fatabulousHeader:nth-child(3) {
+    animation: f3 ease-in-out .5s forwards;
+    animation-delay: 1.9s;
+    opacity: 0;
+}
+.fatabulousHeader:nth-child(4) {
+    animation: f4 ease-in-out .5s forwards;
+    animation-delay: 2.1s;
+    opacity: 0;
+}
+.fatabulousHeader:nth-child(5) {
+    animation: f5 ease-in-out .5s forwards;
+    animation-delay: 2.3s;
+    opacity: 0;
+}
+.fatabulousHeader:nth-child(6) {
+    animation: f6 ease-in-out .5s forwards;
+    animation-delay: 2.5s;
+    opacity: 0;
+}
+.fatabulousHeader:nth-child(7) {
+    animation: f7 ease-in-out .5s forwards;
+    animation-delay: 2.7s;
+    opacity: 0;
+}
+
+@keyframes f1 {
+    from {transform: translateX(-2800%)} to {transform: translate(default,default); opacity: 1}
+}
+@keyframes f2 {
+    from {transform: translate(-800%, 1400%)} to {transform: translate(default,default); opacity: 1}
+}
+@keyframes f3 {
+    from {transform: translate(-730%, 1400%)} to {transform: translate(default,default); opacity: 1}
+}
+@keyframes f4 {
+    from {transform: translateY(1400%)} to {transform: translate(default,default); opacity: 1}
+}
+@keyframes f5 {
+    from {transform: translate(730%, 1400%)} to {transform: translate(default,default); opacity: 1}
+}
+@keyframes f6 {
+    from {transform: translate(3600%, 1400%)} to {transform: translate(default,default); opacity: 1}
+}
+@keyframes f7 {
+    from {transform: translateX(1250%)} to {transform: translate(default,default); opacity: 1}
+}
+
+
+@keyframes pandoraRight {
+    from {
+        transform: translateX(190%);
+    }
+
+    to {
+        transform: translateX(default);
+        opacity: 1;
+    }
+}
+
+@keyframes pandoraTop {
+    from {
+        opacity: 0;
+        transform: translateY(-400%);
+    }
+
+    top {
+        opacity: 1;
+        transform: translateY(default)
+    }
+}
+
+.EverHeader:nth-child(1) {
+    animation: everFadeIn ease-in 5s forwards;
+}
+.EverHeader:nth-child(2) {
+    animation: everFadeIn ease-in 6s forwards;
+}
+.EverHeader:nth-child(3) {
+    animation: everFadeIn ease-in 7s forwards;
+}
+.EverHeader:nth-child(4) {
+    animation: everFadeIn ease-in 8s forwards;
+}
+.EverHeader:nth-child(5) {
+    animation: everFadeIn ease-in 9s forwards;
+}
+.EverHeader:nth-child(6) {
+    animation: everFadeIn ease-in 10s forwards;
+}
+.EverHeader:nth-child(7) {
+    animation: everFadeIn ease-in 11s forwards;
+}
+
+@keyframes everFadeIn {
+    from {
+        opacity: 0
+    }
+
+    to {
+        opacity: .1
+    }
+}
+
+@keyframes movingBackground {
+    0% {
+        /* background: linear-gradient(to top right, #360033, #0b8793); */
+        background: #360033
+    }
+    
+    50% {
+        /* background: linear-gradient(to top left, #360033, #0b8793); */
+        background: #0b8793
+    }
+    
+    100% {
+        /* background: linear-gradient(to top right, #360033, #0b8793); */
+        background: #360033
+    }
 }
