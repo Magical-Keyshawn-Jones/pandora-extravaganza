@@ -10,7 +10,8 @@ const CustomStyles = {
       sx: {
         background: 'linear-gradient(to right, #8e9eab, #eef2f3)',
         width: '10%',
-        fontSize: '3rem'
+        fontSize: '3rem',
+        margin: '0 0 0 -1rem',
       }
     },
 
@@ -23,6 +24,7 @@ const CustomStyles = {
     profileTooltipAvatar: {
       height: '2rem',
       width: '2rem',
+      marginRight: '1rem',
     },
 
     divider1: {

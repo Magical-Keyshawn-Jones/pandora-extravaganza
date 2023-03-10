@@ -8,16 +8,9 @@
     background: linear-gradient(to top, #d9a7c7, #fffcdc);
 */
 
-/* Default padding for all pages */
-.Homepage {
-    padding: 1rem 1rem 0 1rem;
-}
-
 .AppPage {
-    height: 100%;
-    width: 100%; 
-    /* min-height: max-content; */
-    background: linear-gradient(to bottom, #ef32d9, #89fffd);
+
+    background: linear-gradient(to bottom, #ef32d9, #89fffd); 
 }
 
 .AppNavBar {
@@ -25,13 +18,15 @@
     color: white;
     height: 6%;
     min-height: 3.5rem;
+    width: 100%;
     font-size: 1em;
     box-shadow: 0 1px 1rem black;
-    animation: HomeNavBar .7s ease-in forwards;
+    /* animation: HomeNavBar .7s ease-in forwards; */
     position: relative;
     top: -.2rem;
     display: flex;
-    flex-direction: row-reverse;
+    justify-content: space-between;
+    padding-left: 2rem;
 }
 
 @keyframes HomeNavBar {
@@ -45,12 +40,8 @@
 }
 
 .Routes {
-    height: 100%;
+    padding: 1rem 1rem 0 1rem;
     width: 100%;
-    background: linear-gradient(to bottom, #ef32d9, #89fffd);
-}
-
-#root {
     height: 100%;
-    width: 100%;
+    min-height: 100vh;
 }

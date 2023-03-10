@@ -14,22 +14,64 @@
         3px 3px #fe4902;
 */
 
+/* @mobile-small: ~"(min-width: 320px) and (max-width: 375px)";
+@mobile-medium: ~"(min-width: 376px) and (max-width: 414px)";
+@mobile-large: ~"(min-width: 415px) and (max-width: 480px)";
+@tablet-small: ~"(min-width: 481px) and (max-width: 768px)";
+@tablet-large: ~"(min-width: 769px) and (max-width: 1024px)";
+@laptop: ~"(min-width: 1025px) and (max-width: 1280px)"; */
+        
 .Homepage {
-    width: 100%;
-    height: 100%;
-    min-height: 100vh;
-    animation: overflowManagement ease-in 5s forwards
-
+    padding-top: 5rem;
+    animation: overflowManagement ease-in 5s forwards;
+    overflow-wrap:break-word;
 }
 
 @keyframes overflowManagement {
     from {
         overflow: hidden
     }
-
+    
     to {
         overflow: default
     }
+}
+
+.HomeHeaderImgs {
+    display: flex;
+    margin-bottom: 10rem;
+    width: clamp(2rem, 100%, 100%);
+    padding: 0 5%;
+    justify-content: space-between;
+}
+
+.HomeHeaderImgs img {
+    height: 100%;
+    width: 100%;
+}
+
+.HomeHeaderImgs div {
+    /* aspect-ratio: 1/1; */
+    /* height: clamp(2rem, 10rem, 15rem); */
+    height: clamp(5rem, 20vh, 100vh);
+    width: clamp(5rem, 20vh, 100vh);
+    animation: imgGrow ease-in-out 2s forwards;
+    opacity: 0;
+}
+
+@keyframes imgGrow {
+    from {transform: scale(0)}
+    to {opacity: 1; transform: scale(1)}
+}
+
+.HomeHeaderImgs div:nth-child(1) {
+    animation-delay: 2.8s;
+}
+.HomeHeaderImgs div:nth-child(2) {
+    animation-delay: 3.4s;
+}
+.HomeHeaderImgs div:nth-child(3) {
+    animation-delay: 4s;
 }
 
 .Homepage header {
@@ -37,17 +79,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: relative;
-    top: 20rem;
     color: black;
-}
-
-.Homepage header h1 {
-    font-size: 7em;
-}
-
-.Homepage header p {
-    font-size: 2em;
+    width: 100%;
 }
 
 .HomeHeaderTitle {
@@ -55,60 +88,102 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100%;
 }
 
 .PandoraContainer {
     display: flex;
+    flex-direction: row-reverse;
     gap: 1.5rem;
+    width: 100%;
+    justify-content: center;
 }
 
-.PandoraTitle:nth-child(1) {
-    animation: pandoraTop ease-in .8s forwards;
+.PandoraTitle {
+    font-size: clamp(1rem, 8vw, 6rem);
+    text-shadow: 
+    2px 2px 4px #00ffdd, 
+    3px 2px 4px #00ffdd, 
+    4px 2px 4px #00ffdd, 
+    5px 2px 4px #00ffdd,
+    6px 2px 4px #00ffdd,
+    7px 2px 4px #000000
+    ; 
 }
 
 .PandoraTitle:nth-child(2) {
-    animation: pandoraRight ease-in .7s forwards;
-    animation-delay: .8s;
+    animation: pandoraTop ease-in .8s forwards;
+}
+
+.PandoraTitle:nth-child(1) {
+    animation: pandoraRight ease-in .6s forwards;
+    animation-delay: .5s;
     opacity: 0;
+}
+
+@keyframes pandoraRight {
+    from {
+        transform: translateX(190%);
+    }
+
+    to {
+        transform: translateX(default);
+        opacity: 1;
+    }
+}
+
+@keyframes pandoraTop {
+    from {
+        opacity: 0;
+        transform: translateY(-400%);
+    }
+
+    top {
+        opacity: 1;
+        transform: translateY(default)
+    }
 }
 
 .FatabulousContainer {
     display: flex;
     gap: .5rem;
+    /* font-size: clamp(1rem, 1.6rem, 2rem); */
+    font-size: clamp(.5rem, 2vw, 2rem);
+    font-weight: 500;
 }
 
 .fatabulousHeader:nth-child(1) {
-    animation: f1 ease-in-out .5s forwards;
-    animation-delay: 1.5s;
+    animation: f1 ease-in-out .4s forwards;
+    animation-delay: 1s;
     opacity: 0;
 }
 .fatabulousHeader:nth-child(2) {
-    animation: f2 ease-in-out .5s forwards;
-    animation-delay: 1.7s;
+    animation: f2 ease-in-out .4s forwards;
+    animation-delay: 1.3s;
     opacity: 0;
 }
 .fatabulousHeader:nth-child(3) {
-    animation: f3 ease-in-out .5s forwards;
-    animation-delay: 1.9s;
+    animation: f3 ease-in-out .4s forwards;
+    animation-delay: 1.6s;
     opacity: 0;
 }
 .fatabulousHeader:nth-child(4) {
-    animation: f4 ease-in-out .5s forwards;
-    animation-delay: 2.1s;
+    animation: f4 ease-in-out .4s forwards;
+    animation-delay: 1.9s;
     opacity: 0;
 }
 .fatabulousHeader:nth-child(5) {
-    animation: f5 ease-in-out .5s forwards;
-    animation-delay: 2.3s;
+    animation: f5 ease-in-out .4s forwards;
+    animation-delay: 2.1s;
     opacity: 0;
 }
 .fatabulousHeader:nth-child(6) {
-    animation: f6 ease-in-out .5s forwards;
-    animation-delay: 2.5s;
+    animation: f6 ease-in-out .4s forwards;
+    animation-delay: 2.4s;
     opacity: 0;
 }
 .fatabulousHeader:nth-child(7) {
-    animation: f7 ease-in-out .5s forwards;
+    animation: f7 ease-in-out .4s forwards;
     animation-delay: 2.7s;
     opacity: 0;
 }
@@ -135,50 +210,26 @@
     from {transform: translateX(1250%)} to {transform: translate(default,default); opacity: 1}
 }
 
-
-@keyframes pandoraRight {
-    from {
-        transform: translateX(190%);
-    }
-
-    to {
-        transform: translateX(default);
-        opacity: 1;
-    }
-}
-
-@keyframes pandoraTop {
-    from {
-        opacity: 0;
-        transform: translateY(-400%);
-    }
-
-    top {
-        opacity: 1;
-        transform: translateY(default)
-    }
-}
-
 .EverHeader:nth-child(1) {
-    animation: everFadeIn ease-in 5s forwards;
-}
-.EverHeader:nth-child(2) {
-    animation: everFadeIn ease-in 6s forwards;
-}
-.EverHeader:nth-child(3) {
     animation: everFadeIn ease-in 7s forwards;
 }
-.EverHeader:nth-child(4) {
+.EverHeader:nth-child(2) {
     animation: everFadeIn ease-in 8s forwards;
 }
-.EverHeader:nth-child(5) {
+.EverHeader:nth-child(3) {
     animation: everFadeIn ease-in 9s forwards;
 }
-.EverHeader:nth-child(6) {
+.EverHeader:nth-child(4) {
     animation: everFadeIn ease-in 10s forwards;
 }
-.EverHeader:nth-child(7) {
+.EverHeader:nth-child(5) {
     animation: everFadeIn ease-in 11s forwards;
+}
+.EverHeader:nth-child(6) {
+    animation: everFadeIn ease-in 12s forwards;
+}
+.EverHeader:nth-child(7) {
+    animation: everFadeIn ease-in 13s forwards;
 }
 
 @keyframes everFadeIn {
@@ -191,19 +242,80 @@
     }
 }
 
-@keyframes movingBackground {
-    0% {
-        /* background: linear-gradient(to top right, #360033, #0b8793); */
-        background: #360033
+/* Static Versions */
+#Static-HomeHeaderImgs div {
+    animation: none;
+    opacity: 1;
+}
+
+#Static-PandoraTitle {
+    animation: none;
+    opacity: 1;
+}
+
+#Static-fatabulousHeader {
+    animation: none;
+    opacity: 1;
+}
+
+#Static-EverHeader {
+    animation: none;
+    opacity: .1;
+}
+
+/* Testing React on Scroll */
+/* .boxy-container {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5rem 0;
+    margin-top: 25rem;
+}
+
+.boxy {
+    background: white;
+    height: 20rem;
+    width: 50%;
+    margin-bottom: 20rem;
+    opacity: 0;
+}
+
+
+.MoreTesting {
+    opacity: 1;
+}
+
+@keyframes testing {
+    from {
+        opacity: 0
     }
-    
-    50% {
-        /* background: linear-gradient(to top left, #360033, #0b8793); */
-        background: #0b8793
+
+    to {
+        opacity: 1
     }
-    
-    100% {
-        /* background: linear-gradient(to top right, #360033, #0b8793); */
-        background: #360033
+} */
+
+/* Responsive Design */
+@media (320px <= width <= 375px) {
+    .HomeHeaderImgs {
+        margin-bottom: 2rem;
+    }
+
+    .HomeHeaderImgs div {
+        height: 5.5rem
+    }
+
+    .PandoraTitle {
+        text-Shadow: 1px 1px 2px #00ffdd;
+    }
+
+    .FatabulousContainer {
+        display: none;
+    }
+
+    h4 {
+        display: none;
     }
 }
