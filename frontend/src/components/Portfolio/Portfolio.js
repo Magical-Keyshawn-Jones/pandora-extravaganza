@@ -1,8 +1,8 @@
 import './PortfolioCss.css'
-import ProfileImg2 from '../../Storage/Images/Portfolio/Profile_Pic2.jpg'
+import ProfileImg2 from './images/Profile_Pic2.jpg'
 import PandoraHomepage from '../../Storage/Images/Portfolio/PandoraHomepage.png'
 import { portfolioInfo } from './variables'
-import { Divider } from '../../Storage/MuiExports'
+import { Divider, Button } from '../../Storage/MuiExports'
 
 export default function Portfolio() {
 
@@ -25,6 +25,32 @@ export default function Portfolio() {
                 <p>status: {item.status}</p>
                 <p>program: {item.program}</p>
                 <p>yearGraduated: {item.yearGraduated}</p>
+            </div>
+        )
+    }
+
+    const buttonTheme = {
+        height: '2rem',
+        color: 'black'
+    }
+
+    function projectFactory(project) {
+        return (
+            <div className='project-container'>
+                <img src={PandoraHomepage} alt='homepage'/>
+                <div className='project-buttons'>
+                    <Button sx={buttonTheme}>Code</Button>
+                    <Button sx={buttonTheme}>Description</Button>
+                    <Button sx={buttonTheme}>Website</Button>
+                </div>
+                <p className='project-title'>Pandora Extravaganza</p>
+                <div className='project-description'>
+                    <p>
+                        This is the description of the thing that they are asking for
+                        I don't know if it will look like this but I made sure to make it look long
+                        so that way it will be easy to tell them what the description looks like
+                    </p>
+                </div>
             </div>
         )
     }
@@ -61,10 +87,6 @@ export default function Portfolio() {
                 <div className='Portfolio-Projects'>
                     <h1>Projects</h1>
                     {/* <p>Maybe List languages and have sort/filter by language option</p> */}
-                    <div className='yup'>
-                        <img src={PandoraHomepage} alt='homepage'/>
-                        <p>Pandora Extravaganza</p>
-                    </div>
                 </div>
                 
                 <div className='Portfolio-RightBar'>
