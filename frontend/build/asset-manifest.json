@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.0e48d1fe.css",
-    "main.js": "/static/js/main.6c4788a5.js",
+    "main.js": "/static/js/main.78d3939e.js",
     "static/media/Party3.gif": "/static/media/Party3.fea7f6c843bf89b8368c.gif",
     "static/media/Party2.webp": "/static/media/Party2.301ca1dddc65ec700620.webp",
     "static/media/Profile_Pic2.jpg": "/static/media/Profile_Pic2.86bea98bd035ded58adb.jpg",
@@ -13,10 +13,10 @@
     "static/media/emilys-candy-latin-ext-400-normal.woff2": "/static/media/emilys-candy-latin-ext-400-normal.20b0766c10ff18932299.woff2",
     "index.html": "/index.html",
     "main.0e48d1fe.css.map": "/static/css/main.0e48d1fe.css.map",
-    "main.6c4788a5.js.map": "/static/js/main.6c4788a5.js.map"
+    "main.78d3939e.js.map": "/static/js/main.78d3939e.js.map"
   },
   "entrypoints": [
     "static/css/main.0e48d1fe.css",
-    "static/js/main.6c4788a5.js"
+    "static/js/main.78d3939e.js"
   ]
 }
