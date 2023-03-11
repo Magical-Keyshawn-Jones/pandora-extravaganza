@@ -1,6 +1,6 @@
 import './PortfolioCss.css'
 // import ProfileImg2 from './images/Profile_Pic2.jpg'
-import ProfileImg2 from '../../assets/images/Profile_Pic2.jpg'
+// import ProfileImg2 from '../../../public/images/Profile_Pic2.jpg'
 import PandoraHomepage from '../../Storage/Images/Portfolio/PandoraHomepage.png'
 import { portfolioInfo } from './variables'
 import { Divider, Button } from '../../Storage/MuiExports'
@@ -60,7 +60,7 @@ export default function Portfolio() {
         <main className='PortfolioMain'>
             <header>
                 <div className='Profile-Image'>
-                    <img src='../../assets/images/Profile_Pic2.jpg' alt='Profile' />
+                    <img src='../../../public/images/Profile_Pic2.jpg' alt='Profile' />
                 </div>
                 {/* Make the title very magical */}
                 <div className='Portfolio-Title'>

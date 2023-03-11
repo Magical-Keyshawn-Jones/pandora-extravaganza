@@ -1,10 +1,9 @@
 {
   "files": {
     "main.css": "/static/css/main.0e48d1fe.css",
-    "main.js": "/static/js/main.78d3939e.js",
+    "main.js": "/static/js/main.733c686e.js",
     "static/media/Party3.gif": "/static/media/Party3.fea7f6c843bf89b8368c.gif",
     "static/media/Party2.webp": "/static/media/Party2.301ca1dddc65ec700620.webp",
-    "static/media/Profile_Pic2.jpg": "/static/media/Profile_Pic2.86bea98bd035ded58adb.jpg",
     "static/media/PandoraHomepage.png": "/static/media/PandoraHomepage.a5d0b1b6575dab9fda7d.png",
     "static/media/Party1.gif": "/static/media/Party1.58c7b18b6f7d3c07d623.gif",
     "static/media/emilys-candy-all-400-normal.woff": "/static/media/emilys-candy-all-400-normal.a91a531dec2017c49d3e.woff",
@@ -13,10 +12,10 @@
     "static/media/emilys-candy-latin-ext-400-normal.woff2": "/static/media/emilys-candy-latin-ext-400-normal.20b0766c10ff18932299.woff2",
     "index.html": "/index.html",
     "main.0e48d1fe.css.map": "/static/css/main.0e48d1fe.css.map",
-    "main.78d3939e.js.map": "/static/js/main.78d3939e.js.map"
+    "main.733c686e.js.map": "/static/js/main.733c686e.js.map"
   },
   "entrypoints": [
     "static/css/main.0e48d1fe.css",
-    "static/js/main.78d3939e.js"
+    "static/js/main.733c686e.js"
   ]
 }
