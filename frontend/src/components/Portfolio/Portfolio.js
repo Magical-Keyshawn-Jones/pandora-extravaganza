@@ -1,5 +1,6 @@
 import './PortfolioCss.css'
-import ProfileImg2 from './images/Profile_Pic2.jpg'
+// import ProfileImg2 from './images/Profile_Pic2.jpg'
+import ProfileImg2 from '../../images/Profile_Pic2.jpg'
 import PandoraHomepage from '../../Storage/Images/Portfolio/PandoraHomepage.png'
 import { portfolioInfo } from './variables'
 import { Divider, Button } from '../../Storage/MuiExports'
