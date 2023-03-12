@@ -1,9 +1,7 @@
 import './PortfolioCss.css'
-// import ProfileImg2 from './images/Profile_Pic2.jpg'
-// import ProfileImg2 from '../../../public/images/Profile_Pic2.jpg'
-import PandoraHomepage from '../../Storage/Images/Portfolio/PandoraHomepage.png'
 import { portfolioInfo } from './variables'
 import { Divider, Button } from '../../Storage/MuiExports'
+import { images } from '../../Storage/images'
 
 export default function Portfolio() {
 
@@ -34,11 +32,11 @@ export default function Portfolio() {
         height: '2rem',
         color: 'black'
     }
-
+ 
     function projectFactory(project) {
         return (
             <div className='project-container'>
-                <img src={PandoraHomepage} alt='homepage'/>
+                <img src={images.portfolio.PandoraHomepage} alt='homepage'/>
                 <div className='project-buttons'>
                     <Button sx={buttonTheme}>Code</Button>
                     <Button sx={buttonTheme}>Description</Button>
@@ -63,12 +61,12 @@ export default function Portfolio() {
                     <img src='images/Profile_Pic2.jpg' alt='Profile' />
                 </div>
                 {/* Make the title very magical */}
-                <div className='Portfolio-Title'>
+                <div className='Portfolio-Title'> 
                     <h4>Keyshawn Jones</h4> 
                     <h4>Full-Stack Developer</h4>
                 </div>
-            </header>
-
+            </header> 
+ 
             <section>
                 <div className='Portfolio-LeftBar'>
                     <div className='Portfolio-Contact'>

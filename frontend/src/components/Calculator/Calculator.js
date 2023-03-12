@@ -1,7 +1,6 @@
 import './Calculator.css'
-import backspaceImage from '../../Storage/Images/Calculator/Calculator_Backspace.png'
-import positiveNegative from '../../Storage/Images/Calculator/Calculator_PositiveNegative.png'
 import { useState } from 'react'
+import { images } from '../../Storage/images'
 
 export default function Calculator() {
     // Current Number being Displayed
@@ -14,11 +13,11 @@ export default function Calculator() {
     function buttonFactory(element, index) {
         if (element === 'plusMinus') {
             return (
-                <button className='CalculatorButtonChild' key={index}><img src={positiveNegative} alt='Positive Negative Symbol'/></button>
+                <button className='CalculatorButtonChild' key={index}><img src={images.calculator.Calculator_PositiveNegative} alt='Positive Negative Symbol'/></button>
             )
         } else if (element === 'X') {
             return (
-                <button className='CalculatorButtonChild' key={index}><img src={backspaceImage} alt='Backspace'/></button>
+                <button className='CalculatorButtonChild' key={index}><img src={images.calculator.Calculator_Backspace} alt='Backspace'/></button>
             )
         } else {
             return (

@@ -1,9 +1,5 @@
 import './Homepage.css'
-import { useEffect, useState } from 'react'
-import Party1 from '../../Storage/Images/Homepage/Party1.gif'
-import Party2 from '../../Storage/Images/Homepage/Party2.webp'
-import Party3 from '../../Storage/Images/Homepage/Party3.gif'
-
+import { images } from '../../Storage/images'
 
 // Create a tab with "The end is never the end is then end" => infinite scroll
 export default function Homepage(prop) {
@@ -48,13 +44,13 @@ export default function Homepage(prop) {
             <header>
                 <div className='HomeHeaderImgs' id={animationStatus === true ? '' : 'Static-HomeHeaderImgs'}>
                     <div>
-                        <img src={Party1} alt='Party gif'/>
+                        <img src={images.homepage.Party1} alt='Party gif'/>
                     </div>
                     <div>
-                        <img src={Party2} alt='Party gif'/>
+                        <img src={images.homepage.Party2} alt='Party gif'/>
                     </div>
                     <div>
-                        <img src={Party3} alt='Party gif'/>
+                        <img src={images.homepage.Party3} alt='Party gif'/>
                     </div>
                 </div>
                 <div className='HomeHeaderTitle'>

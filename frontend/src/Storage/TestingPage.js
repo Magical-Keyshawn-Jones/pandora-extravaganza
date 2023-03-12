@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles';
 import { createTheme, ThemeProvider } from "@mui/material"
 import { Container, Tab, Tabs, Box, Typography } from "./MuiExports"
 import '../components/PageNotFound/PageNotFoundCss.css'
-import DessertPhoto from './Images/RandomPhotos/Dessert1.jpg'
+import { images } from "./images";
 
 export default function TestingPage() {
     const [ currentTab, setCurrentTab ] = useState('Home')
@@ -33,7 +33,7 @@ export default function TestingPage() {
     function boxFactory(word, index) {
         return(
             <div>
-                <img src={DessertPhoto} alt='food'/>
+                <img src={images.randomPhotos.Dessert1} alt='food'/>
             </div>
         )
     }

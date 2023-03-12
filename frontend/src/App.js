@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { CustomStyles } from './AppMUI';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 // Images
-import NeonK from './Storage/Images/Homepage/Neon_K.png'
+import { images } from './Storage/images';
 // Material Ui imports
 import {    
   Avatar, Divider,
@@ -107,7 +107,7 @@ function App(props) {
             onClick={menuOpen}
           >
             <Avatar sx={CustomStyles.profileTooltipAvatar}>
-              <img src={NeonK} alt='Neon K'/>
+              <img src={images.homepage.Neon_K} alt='Neon K'/>
             </Avatar>
           </IconButton>
         </Tooltip>
@@ -127,7 +127,7 @@ function App(props) {
           {/* Profile Icon */}
           <MenuItem onClick={menuOpen} sx={CustomStyles.profileMenuItems.profile.container}>
             <Avatar sx={CustomStyles.profileMenuItems.profile.icon}>
-              <img src={NeonK} alt='Neon K'/>
+              <img src={images.homepage.Neon_K} alt='Neon K'/>
             </Avatar>
             <Typography sx={CustomStyles.profileMenuItems.profile.text} > Profile </Typography>
           </MenuItem>
