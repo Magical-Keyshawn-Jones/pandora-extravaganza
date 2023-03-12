@@ -58,7 +58,7 @@ export default function Portfolio() {
         <main className='PortfolioMain'>
             <header>
                 <div className='Profile-Image'>
-                    <img src='images/Profile_Pic2.jpg' alt='Profile' />
+                    <img src={images.portfolio.Profile_Pic2} alt='Profile' />
                 </div>
                 {/* Make the title very magical */}
                 <div className='Portfolio-Title'> 
