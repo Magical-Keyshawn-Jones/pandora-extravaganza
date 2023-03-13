@@ -7,6 +7,7 @@
     display: flex;
     flex-direction: column;
     height: 100%;
+    background: rgba(108, 159, 193, 1);
 }
 
 .PortfolioMain header {
@@ -20,12 +21,14 @@
 .PortfolioMain header img {
     height: 100%;
     width: 100%;
+    border-radius: inherit;
 }
 
 .Profile-Image {
     margin-right: 1rem;
     height: 20rem; 
     width: 35rem;
+    border-radius: .5rem;
 }
 
 /* Make the title very magical */
@@ -34,7 +37,30 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background: white;
+    /* background: white; */
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+    border-radius: .5rem;
+    font-family: 'Itim';
+}
+
+.Portfolio-Title-Container {
+    position: relative;
+    width: 100%;
+}
+
+.Portfolio-Title-Container div:nth-child(2) {
+    position: absolute;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: .5rem;
+}
+
+.Portfolio-Title-Container div:nth-child(2) img {
+    height: 100%;
     width: 100%;
 }
 
@@ -81,6 +107,33 @@
     padding: 0 1rem;
 }
 
+.Portfolio-LeftBar-Item {
+    border: solid 1px black;
+    border-radius: 1rem;
+    padding: 1rem;
+    position: relative;
+    z-index: 0;
+}
+
+.Portfolio-LeftBar-Item span {
+    font-weight: 900;
+    font-family: 'Caveat';
+    font-size: 1.6rem;
+}
+
+.Portfolio-LeftBar-Item::before {
+    content: '';
+    background: white;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    opacity: .8;
+    top: 0;
+    left: 0;
+    border-radius: inherit;
+    z-index: -1;
+}
+
 .Portfolio-Contact {
     font-size: 1.3rem;
 }
@@ -99,15 +152,66 @@
     border-radius: 1rem;
     padding: .5rem;
     margin-top: 1rem;
+    border: solid 1px black;
+    position: relative;
+    z-index: 0;
+} 
+
+.Portfolio-Work p:nth-child(1) {
+    font-weight: 900;
+    font-family: 'Caveat';
+    font-size: 1.6rem;
 }
 
 .Portfolio-Work li {
     list-style: circle;
 }
 
+.Portfolio-Work::before {
+    content: '';
+    background: white;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    opacity: .8;
+    top: 0;
+    left: 0;
+    border-radius: inherit;
+    z-index: -1;
+}
+
+.Portfolio-Education {
+    border-radius: 1rem;
+    padding: 1rem;
+    margin-top: 1rem;
+    border: solid 1px black;
+    position: relative;
+    z-index: 0;
+}
+
+.Portfolio-Education::before {
+    content: '';
+    background: white;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    opacity: .8;
+    top: 0;
+    left: 0;
+    border-radius: inherit;
+    z-index: -1;
+}
+
+.Portfolio-Education span {
+    font-weight: 900;
+    font-family: 'Caveat';
+    font-size: 1.6rem;
+}
+
 .project-title {
-    font-size: 2rem;
+    font-size: 2.3rem;
     text-align: center;
+    font-family: 'Itim';
 }
 .project-container {
     border-radius: 1rem;
@@ -117,6 +221,11 @@
     width: 40%;
     height: min-content;
     font-size: .5rem;
+}
+
+.project-container a {
+    text-decoration: none;
+    color: black;
 }
 
 .project-container img {
@@ -137,7 +246,8 @@
 }
 
 .project-description {
-    font-size: 1rem;
+    display: none;
+    font-size: 1.2rem;
     padding: 0 .5rem;
 }
 

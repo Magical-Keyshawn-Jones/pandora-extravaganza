@@ -12,10 +12,14 @@ const images = {
     },
 
     portfolio: {
-        PandoraHomepage: 'images/portfolio/PandoraHomepage.png',
+        projects: {
+            // In the future images will come from the variable create for ease of access
+            pandora_extravaganza: 'images/portfolio/PandoraHomepage.png',
+        },
         PortfolioBackground: 'images/portfolio/PortfolioBackground.jpg',
         Profile_Pic: 'images/portfolio/Profile_Pic.jpg',
         Profile_Pic2: 'images/portfolio/Profile_Pic2.jpg',
+        Portfolio_Wallpaper1: 'images/portfolio/Portfolio_Wallpaper1.webp',
     },
 
     randomPhotos: {

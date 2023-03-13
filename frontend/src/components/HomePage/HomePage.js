@@ -40,7 +40,7 @@ export default function Homepage(prop) {
     //  })
 
     return (
-        <main className='Homepage'>
+        <main className='Homepage' id='website-padding'>
             <header>
                 <div className='HomeHeaderImgs' id={animationStatus === true ? '' : 'Static-HomeHeaderImgs'}>
                     <div>

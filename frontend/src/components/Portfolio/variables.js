@@ -1,15 +1,15 @@
-
+import { images } from "../../Storage/images"
 // Rework this so I can do this from my backend. So I can update my side at anytime without vscode
 const portfolioInfo = {
     projects: [
         {
-            title: '',
-            description: '',
-            languages: '',
-            framework: '',
-            image: '',
-            github: '',
-            website: ''
+            title: 'Pandora Extravaganza',
+            description: 'My Portfolio/Full-Stack website that will host all my React/Django/SQLite projects',
+            languages: 'JavaScript, Python, SQL',
+            framework: 'React, Django, SQLite',
+            image: images.portfolio.projects.pandora_extravaganza,
+            github: 'https://github.com/Magical-Keyshawn-Jones/pandora-extravaganza.git',
+            website: 'https://pandora-extravaganza.vercel.app/',
         },
     ],
 
