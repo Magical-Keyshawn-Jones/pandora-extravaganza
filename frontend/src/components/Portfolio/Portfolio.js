@@ -2,6 +2,7 @@ import './PortfolioCss.css'
 import { portfolioInfo } from './variables'
 import { Divider, Button } from '../../Storage/MuiExports'
 import { images } from '../../Storage/images'
+import axios from 'axios'
 /* 
     Fix Projects being too big. It's being shoved in my face
 */
@@ -49,9 +50,9 @@ export default function Portfolio() {
         return (
             <div className='project-container'>
                 <img src={project.image} alt='homepage'/>
-                <div className='project-buttons'>
+                <div className='project-buttons'> 
                     <Button sx={buttonTheme}><a href={project.github} target='_blank' rel='noreferrer'>Code</a></Button>
-                    <Button sx={buttonTheme} onClick={()=>{toggleDescription()}}>Description</Button>
+                    <Button sx={buttonTheme} onClick={()=>{toggleDescription()}}>Description</Button> 
                     <Button sx={buttonTheme}><a href={project.website} target='_blank' rel='noreferrer'>Website</a></Button>
                 </div>
                 <p className='project-title'>{project.title}</p>
@@ -61,6 +62,10 @@ export default function Portfolio() {
             </div>
         )
     }
+
+    axios.get('https://pandora-extravaganza.vercel.app/users')
+    .then(res => console.log(res))
+    .catch(err => console.log(err, 'Big Bad!'))
 
     return (
         <main className='PortfolioMain' id='website-padding'>
@@ -87,8 +92,8 @@ export default function Portfolio() {
                         <p className='Portfolio-LeftBar-Item'><span>Name:</span> Keyshawn Jones</p>
                         <p className='Portfolio-LeftBar-Item'><span>Email:</span> Keyshawnjones29@gmail.com</p> 
                         <p className='Portfolio-LeftBar-Item'><span>Phone#:</span> (573)-722-2850</p>
-                        <p className='Portfolio-LeftBar-Item'><span>Github:</span> <a href='https://github.com/Magical-Keyshawn-Jones' target='_blank' rel='noreferrer'>Magical-Keyshawn-Jones</a></p>
-                        <p className='Portfolio-LeftBar-Item'><span>LinkedIn:</span> <a href='https://www.linkedin.com/in/keyshawn-jones-a399a122a' target='_blank' rel='noreferrer'>Keyshawn Jones</a></p>
+                        <a href='https://github.com/Magical-Keyshawn-Jones' target='_blank' rel='noreferrer'><p className='Portfolio-LeftBar-Item'><span>Github:</span> Magical-Keyshawn-Jones</p></a>
+                        <a href='https://www.linkedin.com/in/keyshawn-jones-a399a122a' target='_blank' rel='noreferrer'><p className='Portfolio-LeftBar-Item'><span>LinkedIn:</span> Keyshawn Jones</p></a>
                         <p className='Portfolio-LeftBar-Item'><span>Languages:</span> HTML/CSS, LESS, JavaScript, Node.js, Express, TypeScript, Python, Java</p>
                         <p className='Portfolio-LeftBar-Item'><span>Frameworks:</span> React, Django, FastAPI, Flask, Angular, SpringBoot, Jest, Cypress</p>
                         <p className='Portfolio-LeftBar-Item'><span>Databases:</span> SQLite, PostgreSQL</p>
