@@ -2,7 +2,6 @@ import './PortfolioCss.css'
 import { portfolioInfo } from './variables'
 import { Divider, Button } from '../../Storage/MuiExports'
 import { images } from '../../Storage/images'
-import axios from 'axios'
 /* 
     Fix Projects being too big. It's being shoved in my face
 */
@@ -62,10 +61,6 @@ export default function Portfolio() {
             </div>
         )
     }
-
-    axios.get('https://pandora-extravaganza.vercel.app/users')
-    .then(res => console.log(res))
-    .catch(err => console.log(err, 'Big Bad!'))
 
     return (
         <main className='PortfolioMain' id='website-padding'>

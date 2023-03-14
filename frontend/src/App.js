@@ -2,7 +2,6 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fontsource/emilys-candy/400.css'
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { CustomStyles } from './AppMUI';
@@ -90,10 +89,6 @@ function App(props) {
     setMenuAnchor(null)
   }
 
-  axios.get('http://127.0.0.1:8000/users')
-  .then(res => console.log(res))
-  .catch(err => console.log(err, 'Big Bad!'))
-   
   return (
     <main className='AppPage'>
       <nav className='AppNavBar'>
