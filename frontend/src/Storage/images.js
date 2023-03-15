@@ -14,10 +14,12 @@ const images = {
     portfolio: {
         projects: {
             // In the future images will come from the variable create for ease of access
-            pandora_extravaganza: 'images/portfolio/PandoraHomepage.png',
+            pandora_extravaganza: 'images/portfolio/projects/PandoraHomepage.png',
+            land_of_gaming: 'images/portfolio/projects/Land_of_Gaming.png',
+            LittleFuzzyWebsite: 'images/portfolio/projects/LittleFuzzyWebsite.png',
+            Advanced_Web_Applications: 'images/portfolio/projects/Advanced_Web_Applications.png',
+            React_Router_Movies: 'images/portfolio/projects/React_Router_Movies.png',
         },
-        PortfolioBackground: 'images/portfolio/PortfolioBackground.jpg',
-        Profile_Pic: 'images/portfolio/Profile_Pic.jpg',
         Profile_Pic2: 'images/portfolio/Profile_Pic2.jpg',
         Portfolio_Wallpaper1: 'images/portfolio/Portfolio_Wallpaper1.webp',
     },

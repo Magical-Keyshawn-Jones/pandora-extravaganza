@@ -1,12 +1,12 @@
 import './PortfolioCss.css'
 import { portfolioInfo } from './variables'
-import { Divider, Button } from '../../Storage/MuiExports'
+import { Box, Button } from '../../Storage/MuiExports'
 import { images } from '../../Storage/images'
 /* 
     Fix Projects being too big. It's being shoved in my face
 */
 export default function Portfolio() {
-    // Keeps Track of project-container dom after mounting
+
     function experienceFactory(work) {
         return (
             <div className='Portfolio-Work'>
@@ -39,24 +39,26 @@ export default function Portfolio() {
     Fix Projects being too big. It's being shoved in my face
 */
 
-    function projectFactory(project) {
+    function projectFactory(project, key) {
         
         function toggleDescription () {
             const testing = document.getElementsByClassName('project-description')
-            testing[0].classList.toggle('description-visible')
+            testing[key].classList.toggle('description-visible')
         }
 
         return (
-            <div className='project-container'>
-                <img src={project.image} alt='homepage'/>
+            <div className='project-container' key={key}>
+                {project.image === false ? '' : <img src={project.image} alt='homepage'/>}
                 <div className='project-buttons'> 
                     <Button sx={buttonTheme}><a href={project.github} target='_blank' rel='noreferrer'>Code</a></Button>
                     <Button sx={buttonTheme} onClick={()=>{toggleDescription()}}>Description</Button> 
-                    <Button sx={buttonTheme}><a href={project.website} target='_blank' rel='noreferrer'>Website</a></Button>
+                    {project.website === false ? '' : <Button sx={buttonTheme}><a href={project.website} target='_blank' rel='noreferrer'>Website</a></Button>}
                 </div>
                 <p className='project-title'>{project.title}</p>
                 <div className='project-description'>
                     <p>{project.description}</p>
+                    <p><span>Languages: </span>{project.languages}</p>
+                    <p><span>Framework: </span>{project.framework}</p>
                 </div>
             </div>
         )
@@ -99,13 +101,16 @@ export default function Portfolio() {
                 <div className='Portfolio-Projects'>
                     <h1>Projects</h1>
                     {/* <p>Maybe List languages and have sort/filter by language option</p> */}
-                    {portfolioInfo.projects.map(item => {return projectFactory(item)})}
+                    <div className='project-grid'>
+                        {portfolioInfo.projects.map((item, index) => {return projectFactory(item, index)})}
+                    </div>
                 </div>
                 
                 <div className='Portfolio-RightBar'>
                     <h1>Education/Experience</h1>
                     {portfolioInfo.experience.map(item => {return experienceFactory(item)})}
-                    <Divider sx={{ borderColor: 'black', marginBottom: '1rem'}}/>
+                    {/* <Divider sx={{ margin: '1rem 0', height: '1rem', background: 'black'}}/> */}
+                    <Box sx={{height: '2px', background: 'black', margin: '1rem 0'}}></Box>
                     {portfolioInfo.education.map(item => {return educationFactory(item)})}
                 </div>
             </section>

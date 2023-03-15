@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.c695cfc0.css",
-    "main.js": "/static/js/main.f1398c84.js",
+    "main.css": "/static/css/main.731f13b3.css",
+    "main.js": "/static/js/main.63ad8e87.js",
     "static/media/emilys-candy-all-400-normal.woff": "/static/media/emilys-candy-all-400-normal.a91a531dec2017c49d3e.woff",
     "static/media/emilys-candy-latin-400-normal.woff2": "/static/media/emilys-candy-latin-400-normal.586710be3fe831b2ad8b.woff2",
     "static/media/emilys-candy-latin-ext-400-normal.woff2": "/static/media/emilys-candy-latin-ext-400-normal.20b0766c10ff18932299.woff2",
     "index.html": "/index.html",
-    "main.c695cfc0.css.map": "/static/css/main.c695cfc0.css.map",
-    "main.f1398c84.js.map": "/static/js/main.f1398c84.js.map"
+    "main.731f13b3.css.map": "/static/css/main.731f13b3.css.map",
+    "main.63ad8e87.js.map": "/static/js/main.63ad8e87.js.map"
   },
   "entrypoints": [
-    "static/css/main.c695cfc0.css",
-    "static/js/main.f1398c84.js"
+    "static/css/main.731f13b3.css",
+    "static/js/main.63ad8e87.js"
   ]
 }

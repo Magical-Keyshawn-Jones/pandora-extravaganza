@@ -80,18 +80,73 @@
     border-right: 1px black solid;
     height: initial;
     max-height: 73rem;
-    width: 100%;
-    overflow-y: scroll; 
+    /* width: 100%; */
+    overflow-y: scroll;
 }
 
-.project-holder {
-    height: inherit;
+.project-grid {
+    display: grid;
     width: inherit;
-    max-height: 70;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    /* grid-template-rows: repeat(4, 1fr); */
 }
 
 .Portfolio-Projects::-webkit-scrollbar {
     display: none;
+}
+
+.project-title {
+    font-size: clamp(1rem, 1.5vw, 1.6rem);
+    text-align: center;
+    font-family: 'Itim';
+}
+.project-container {
+    border-radius: 1rem;
+    border: black solid 1px;
+    background: white;
+    height: min-content;
+    font-size: .5rem;
+}
+
+.project-container a {
+    text-decoration: none;
+    color: black;
+}
+
+.project-container img {
+    max-width: 100%;
+    max-height: 100%;
+    border-top-right-radius: inherit;
+    border-top-left-radius: inherit;
+    border-bottom-right-radius: none;
+    border-bottom-left-radius: none;
+}
+
+.project-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    height: min-content;
+    margin-top: .5rem;
+}
+
+.project-description {
+    display: none;
+    font-size: 1.1rem;
+    padding: 0 .5rem;
+}
+
+.project-description span {
+    font-family: 'Itim';
+    font-size: 1.5rem;
+    font-weight: 900;
+}
+
+.description-visible {
+    display: block
 }
 
 .Portfolio-Contact h1, .Portfolio-RightBar h1, .Portfolio-Projects h1 {
@@ -206,52 +261,6 @@
     font-weight: 900;
     font-family: 'Caveat';
     font-size: 1.6rem;
-}
-
-.project-title {
-    font-size: 2.3rem;
-    text-align: center;
-    font-family: 'Itim';
-}
-.project-container {
-    border-radius: 1rem;
-    border: black solid 1px;
-    background: white;
-    width: 40%;
-    height: min-content;
-    font-size: .5rem;
-}
-
-.project-container a {
-    text-decoration: none;
-    color: black;
-}
-
-.project-container img {
-    max-width: 100%;
-    max-height: 100%;
-    border-top-right-radius: inherit;
-    border-top-left-radius: inherit;
-    border-bottom-right-radius: none;
-    border-bottom-left-radius: none;
-}
-
-.project-buttons {
-    display: flex;
-    justify-content: space-evenly;
-    width: 100%;
-    height: min-content;
-    margin-top: .5rem;
-}
-
-.project-description {
-    display: none;
-    font-size: 1.2rem;
-    padding: 0 .5rem;
-}
-
-.description-visible {
-    display: block
 }
 
 /* body::-webkit-scrollbar {
